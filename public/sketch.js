@@ -9,9 +9,20 @@ var prevTime
 
 var state = "Run"
 
+var img;
+
+function preload() {
+	img = loadImage("assets/TrashyDove1.png");
+}
+
+function setup() {
+	image(img, 0, 0);
+}
+
 function setup() {
 	createCanvas(document.body.offsetWidth, document.body.offsetHeight)
 	rectMode(CENTER)
+	imageMode(CENTER)
 	init()
 	prevTime = window.performance.now()
 }
@@ -66,6 +77,10 @@ function update(elapsedTime) {
 function init() {
 	bird.pos.x = width / 4
 	bird.pos.y = height / 4
+	bird.size = {
+		x: height / 10,
+		y: height / 10
+	}
 	menu.pos.x = width / 2
 	menu.pos.y = height / 2
 	menu.size.x = width / 4
@@ -119,8 +134,7 @@ var bird = {
 	},
 	mass: weight,
 	draw: function () {
-		fill('#f4ce42')
-		rect(this.pos.x, this.pos.y, this.size.x, this.size.y)
+		image(img, this.pos.x, this.pos.y, this.size.x, this.size.y)
 	}
 }
 
