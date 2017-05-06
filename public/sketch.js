@@ -1,5 +1,5 @@
 /*jslint vars: true, plusplus: true, devel: true, esversion: 6, asi: true*/
-/*globals background, createCanvas, document, resizeCanvas, rect, rectMode, CENTER, width, height, keyCode, WEBGL, window, fill, translate, setTimeout, mouseX, mouseY, text, textSize */
+/*globals background, createCanvas, document, resizeCanvas, rect, rectMode, CENTER, width, height, keyCode, WEBGL, window, fill, translate, setTimeout, mouseX, mouseY, text, textSize, loadImage, image, imageMode */
 
 var jumpPower = 0
 var weight = 0
@@ -9,15 +9,12 @@ var prevTime
 
 var state = "Run"
 
-var img;
-
 function preload() {
-	img = loadImage("assets/TrashyDove1.png");
+	bird.sprite = loadImage("assets/TrashyDove1.png");
+	menu.sprite = loadImage("assets/play-button.png")
 }
 
-function setup() {
-	image(img, 0, 0);
-}
+function setup() {}
 
 function setup() {
 	createCanvas(document.body.offsetWidth, document.body.offsetHeight)
@@ -75,16 +72,16 @@ function update(elapsedTime) {
 }
 
 function init() {
-	bird.pos.x = width / 4
-	bird.pos.y = height / 4
+	bird.pos.x = width / 8
+	bird.pos.y = height / 8
 	bird.size = {
 		x: height / 10,
 		y: height / 10
 	}
 	menu.pos.x = width / 2
 	menu.pos.y = height / 2
-	menu.size.x = width / 4
-	menu.size.y = height / 8
+	menu.size.x = width / 6
+	menu.size.y = width / 6
 	jumpPower = height / 30
 	weight = height / 2000
 	gravity = height / 1000
@@ -133,8 +130,9 @@ var bird = {
 		y: 50
 	},
 	mass: weight,
+	sprite: null,
 	draw: function () {
-		image(img, this.pos.x, this.pos.y, this.size.x, this.size.y)
+		image(this.sprite, this.pos.x, this.pos.y, this.size.x, this.size.y)
 	}
 }
 
@@ -147,14 +145,13 @@ var menu = {
 		x: 0,
 		y: 0
 	},
+	sprite: null,
 	draw: function () {
-		fill(255)
-		if (this.hover()) fill(100)
-		rect(this.pos.x, this.pos.y, this.size.x, this.size.y)
-		fill('#ff6321')
-		textSize(this.size.y - 10)
-		text("Retry", this.pos.x, this.pos.y, this.size.x, this.size.y)
-
+		if (this.hover()) {
+			image(this.sprite, this.pos.x, this.pos.y, this.size.x * 1.2, this.size.y * 1.2)
+		} else {
+			image(this.sprite, this.pos.x, this.pos.y, this.size.x, this.size.y)
+		}
 	},
 	hover: function () {
 		if (mouseX < this.pos.x + this.size.x / 2 && mouseX > this.pos.x - this.size.x / 2 &&
