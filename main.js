@@ -1,3 +1,5 @@
+/*jshint esversion: 6, asi: true, node: true */
+
 const {
 	app, BrowserWindow
 } = require('electron')
