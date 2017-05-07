@@ -3,15 +3,13 @@
 
 var Bird = require('./scr/bird.js')
 
-var jumpPower = 0
-var weight = 0
-var gravity = 0
+var gravity = 0.1
 
 var prevTime
 
 var state = "Dead"
 
-var bird = new Bird(weight)
+var bird = new Bird()
 
 function preload() {
 	bird.sprite = loadImage("assets/TrashyDove1.png")
@@ -27,31 +25,20 @@ function setup() {
 }
 
 function init() {
-	bird.pos.x = width / 8
-	bird.pos.y = height / 8
-	bird.size = {
-		x: height / 10,
-		y: height / 10
-	}
 	menu.pos.x = width / 2
 	menu.pos.y = height / 2
 	menu.size.x = width / 6
 	menu.size.y = width / 6
-	jumpPower = height / 30
-	weight = height / 2000
-	gravity = height / 1000
-	bird.mass = weight
 }
 
 function draw() {
 
 	background('#35e052')
-		//translate(-width / 2, -height / 2)
 
 	if (state === "Run") {
-		update(window.performance.now() - prevTime)
+		update()
 
-		if (checkIfDead()) {
+		if (bird.collides()) {
 			die()
 		}
 	}
@@ -62,19 +49,16 @@ function draw() {
 
 	bird.draw()
 
+	prevTime = window.performance.now()
 }
 
-function update(elapsedTime) {
+function update() {
+	var elapsedTime = window.performance.now() - prevTime
 	var targetTime = 16
-	var delta = targetTime / elapsedTime
+	var deltaT = elapsedTime / targetTime
 	var acc = gravity / bird.mass
-	bird.vel.y += acc
-	bird.pos.y += bird.vel.y
-}
-
-function checkIfDead() {
-	if (bird.pos.y < 0 || bird.pos.y > height) return true
-	else return false
+	bird.vel.y += acc * deltaT
+	bird.pos.y += bird.vel.y * deltaT
 }
 
 function die() {
@@ -84,10 +68,7 @@ function die() {
 
 function live() {
 	state = "Run"
-	bird.pos.x = width / 4
-	bird.pos.y = height / 4
-	bird.vel.x = 0
-	bird.vel.y = 0
+	bird.reset()
 }
 
 var menu = {
@@ -115,22 +96,18 @@ var menu = {
 	}
 }
 
-function jump() {
-	bird.vel.y = -jumpPower
-}
-
 function click() {
-	if (state === "Run") jump()
+	if (state === "Run") bird.jump()
 	if (state === "Dead") {
 		if (menu.hover()) live()
 	}
 }
 
 function keyPressed() {
-	if (state === "Run") jump()
+	if (state === "Run") bird.jump()
 }
 
-function mouseClicked() {
+function mousePressed() {
 	click()
 }
 
