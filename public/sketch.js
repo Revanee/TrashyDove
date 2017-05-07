@@ -1,4 +1,4 @@
-/*jslint vars: true, plusplus: true, devel: true, esversion: 6, asi: true*/
+/*jshint node: true, esversion: 6, asi: true*/
 /*globals background, createCanvas, document, resizeCanvas, rect, rectMode, CENTER, width, height, keyCode, WEBGL, window, fill, translate, setTimeout, mouseX, mouseY, text, textSize, loadImage, image, imageMode */
 
 var Bird = require('./scr/bird.js')
