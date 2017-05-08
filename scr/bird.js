@@ -5,7 +5,7 @@ module.exports = class Bird {
 	constructor() {
 		this.pos = {
 			x: 0.2,
-			y: 0.2
+			y: 0.3
 		}
 		this.vel = {
 			x: 0,
