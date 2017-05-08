@@ -81,6 +81,8 @@ function live() {
 	state = "Playing"
 	bird = new Bird()
 	tubes[0] = new Tube()
+
+	bird.jump()
 }
 
 let menu = {
