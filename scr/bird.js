@@ -12,7 +12,7 @@ module.exports = class Bird {
 			y: 0
 		}
 		this.size = {
-			x: 0.05,
+			x: 0.1,
 			y: 0.1
 		}
 		this.jumpPower = 0.03

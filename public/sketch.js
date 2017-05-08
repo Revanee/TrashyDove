@@ -33,6 +33,8 @@ function init() {
 	menu.pos.y = height / 2
 	menu.size.x = width / 6
 	menu.size.y = width / 6
+
+	bird.size.x = height / width * bird.size.y
 }
 
 function draw() {
@@ -81,6 +83,7 @@ function live() {
 	state = "Playing"
 	bird = new Bird()
 	tubes[0] = new Tube()
+	init()
 
 	bird.jump()
 }
