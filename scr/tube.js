@@ -6,8 +6,8 @@ module.exports = class Tube {
 		this.speed = 0.003
 		this.hole = 0.2
 		this.pos = {
-			y: 0.5,
-			x: 0.7
+			y: Math.random(),
+			x: 1.2
 		}
 		this.size = {
 			x: 0.1

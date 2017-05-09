@@ -15,27 +15,34 @@ module.exports = class Bird {
 			x: 0.1,
 			y: 0.1
 		}
-		this.jumpPower = 0.03
-		this.gravity = 0.002
+		this.jumpPower = 0.02
+		this.gravity = 0.0015
+        this.sprite = sprites.bird.idle
+        console.log("idle")
+        this.animationTimeout
 	}
 
 	update(deltaT) {
 		this.vel.y += this.gravity * deltaT
 		this.pos.y += this.vel.y * deltaT
-
-		//		this.pos = {
-		//			x: mouseX / width,
-		//			y: mouseY / height
-		//		}
 	}
 
 	draw() {
 		imageMode(CORNER)
-		image(sprites.bird, this.pos.x * width, this.pos.y * height, this.size.x * width, this.size.y * height)
+		image(this.sprite, this.pos.x * width, this.pos.y * height, this.size.x * width, this.size.y * height)
 	}
 
 	jump() {
 		this.vel.y = -this.jumpPower
+        this.sprite = sprites.bird.flying
+        console.log("flying")
+        
+        let bird = this
+        setTimeout(function() {
+            bird.sprite = sprites.bird.idle
+            console.log("idle")
+            console.log(sprite)
+        }, 100)
 	}
 
 	collides(tubes) {

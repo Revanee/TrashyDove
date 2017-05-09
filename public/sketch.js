@@ -8,20 +8,28 @@ let prevTime
 
 let state = "Menu"
 
-let bird = new Bird()
+let bird
 
 let tubes = []
 
 let sprites = {}
 
+let spawner
+
 function preload() {
-	sprites.bird = loadImage("assets/TrashyDove1.png")
+	sprites.bird = {
+        idle: loadImage("assets/TrashyDove1.png"),
+        flying: loadImage("assets/TrashyDove2.png")
+    }
 	sprites.menu = loadImage("assets/play-button.png")
 }
 
 function setup() {
 	createCanvas(document.body.offsetWidth, document.body.offsetHeight)
 	imageMode(CENTER)
+    
+    bird = new Bird(sprites)
+    
 	init()
 	prevTime = window.performance.now()
 
@@ -77,12 +85,18 @@ function update() {
 
 function die() {
 	state = "Menu"
+    clearInterval(spawner)
 }
 
 function live() {
+    tubes = []
 	state = "Playing"
-	bird = new Bird()
-	tubes[0] = new Tube()
+	bird = new Bird(sprites)
+    
+    spawner = setInterval(function() {
+        tubes.push(new Tube())
+    }, 3000)
+    
 	init()
 
 	bird.jump()
