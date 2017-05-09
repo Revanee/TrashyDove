@@ -17,9 +17,9 @@ module.exports = class Bird {
 		}
 		this.jumpPower = 0.02
 		this.gravity = 0.0015
-        this.sprite = sprites.bird.idle
-        console.log("idle")
-        this.animationTimeout
+		this.sprite = sprites.bird.idle
+		console.log("idle")
+		this.animationTimeout
 	}
 
 	update(deltaT) {
@@ -29,20 +29,27 @@ module.exports = class Bird {
 
 	draw() {
 		imageMode(CORNER)
-		image(this.sprite, this.pos.x * width, this.pos.y * height, this.size.x * width, this.size.y * height)
+
+		push()
+
+		translate(this.pos.x * width, this.pos.y * height)
+		rotate(this.vel.y * 10 - 0.1)
+		image(this.sprite, 0, 0, this.size.x * width, this.size.y * height)
+
+		pop()
 	}
 
 	jump() {
 		this.vel.y = -this.jumpPower
-        this.sprite = sprites.bird.flying
-        console.log("flying")
-        
-        let bird = this
-        setTimeout(function() {
-            bird.sprite = sprites.bird.idle
-            console.log("idle")
-            console.log(sprite)
-        }, 100)
+		this.sprite = sprites.bird.flying
+		console.log("flying")
+
+		let bird = this
+		setTimeout(function () {
+			bird.sprite = sprites.bird.idle
+			console.log("idle")
+			console.log(sprite)
+		}, 100)
 	}
 
 	collides(tubes) {
