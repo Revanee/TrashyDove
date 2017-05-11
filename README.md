@@ -1,4 +1,4 @@
-# FlappyJS
+# TrashyDove
 A Flappy Bird clone in JavaScript
 
 How to run: 
