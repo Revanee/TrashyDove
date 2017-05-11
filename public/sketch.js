@@ -18,6 +18,8 @@ let spawner
 
 let score
 
+
+//load sprites
 function preload() {
 	sprites.bird = {
 		idle: loadImage("assets/bird/TrashyDove1.png"),
@@ -31,53 +33,38 @@ function preload() {
 	sprites.menu = loadImage("assets/play-button.png")
 }
 
+//initialize state of game
 function setup() {
 	createCanvas(document.body.offsetWidth, document.body.offsetHeight)
-	imageMode(CENTER)
-
 	bird = new Bird(sprites)
-
 	init()
 	prevTime = window.performance.now()
-
-	tubes.push(new Tube())
 }
 
-function init() {
-	menu.pos.x = width / 2
-	menu.pos.y = height / 2
-	menu.size.x = width / 6
-	menu.size.y = width / 6
-
-	bird.size.x = height / width * bird.size.y
-}
-
+//main looping function, draw current frame
 function draw() {
 
-	background('#22e4f9')
-
+	//update game logic
 	if (state === "Playing") {
-
 		update()
-
-		if (bird.collides(tubes)) {
-			die()
-		}
-
 	}
 
+	//draw elements
+	background('#22e4f9')
 	bird.draw()
 	tubes.forEach(function (tube) {
 		tube.draw()
 	})
-
 	if (state === "Menu") {
 		menu.draw()
 	}
 
+	//update time elapsed between frames
 	prevTime = window.performance.now()
+
 }
 
+//update game logic once every frame
 function update() {
 	let elapsedTime = window.performance.now() - prevTime
 	let targetTime = 16
@@ -92,14 +79,17 @@ function update() {
 			score++
 		}
 	})
+
+	//check for death
+	if (bird.collides(tubes)) {
+		//handle death
+		state = "Menu"
+		clearInterval(spawner)
+		console.log("Score: " + score)
+	}
 }
 
-function die() {
-	state = "Menu"
-	clearInterval(spawner)
-	console.log("Score: " + score)
-}
-
+//called on spawn
 function live() {
 	score = 0
 	tubes = []
@@ -116,6 +106,7 @@ function live() {
 	bird.jump()
 }
 
+//menu object
 let menu = {
 	pos: {
 		x: 0,
@@ -141,6 +132,7 @@ let menu = {
 	}
 }
 
+//click
 function click() {
 	if (state === "Playing") bird.jump()
 	if (state === "Menu") {
@@ -148,8 +140,7 @@ function click() {
 	}
 }
 
-
-//Bloat
+//controls
 function keyPressed() {
 	if (state === "Playing") bird.jump()
 }
@@ -162,7 +153,18 @@ function touchStarted() {
 	click()
 }
 
+//allow resizing
 function windowResized() {
 	resizeCanvas(document.body.offsetWidth, document.body.offsetHeight)
 	init()
+}
+
+//adjust sizes based on proportions
+function init() {
+	menu.pos.x = width / 2
+	menu.pos.y = height / 2
+	menu.size.x = width / 6
+	menu.size.y = width / 6
+
+	bird.size.x = height / width * bird.size.y
 }

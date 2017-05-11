@@ -1,5 +1,5 @@
 /*jshint node: true, esversion: 6, asi: true*/
-/*global image, width, height, sprites*/
+/*global image, width, height, sprites, imageMode, CORNER*/
 
 module.exports = class Tube {
 	constructor() {
@@ -16,9 +16,7 @@ module.exports = class Tube {
 	}
 
 	draw() {
-		fill(250, 200, 50)
-		rectMode(CORNER)
-		let offset = this.pos.y - parseInt(this.pos.y)
+		imageMode(CORNER)
 		for (let i = 1; i < 10; i++) {
 			image(sprites.tube.body, width * this.pos.x, (this.pos.y - this.hole - 0.1 - 0.1 * i) * height, this.size.x * width, 0.1 * height)
 		}
