@@ -3,6 +3,7 @@
 
 module.exports = class Tube {
 	constructor() {
+		this.passed = false
 		this.speed = 0.003
 		this.hole = 0.2
 		this.pos = {

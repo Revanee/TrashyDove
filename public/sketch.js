@@ -16,6 +16,8 @@ let sprites = {}
 
 let spawner
 
+let score
+
 function preload() {
 	sprites.bird = {
 		idle: loadImage("assets/bird/TrashyDove1.png"),
@@ -85,15 +87,21 @@ function update() {
 
 	tubes.forEach(function (tube) {
 		tube.update(deltaT)
+		if (tube.pos.x + tube.size.x < bird.pos.x && !tube.passed) {
+			tube.passed = true
+			score++
+		}
 	})
 }
 
 function die() {
 	state = "Menu"
 	clearInterval(spawner)
+	console.log("Score: " + score)
 }
 
 function live() {
+	score = 0
 	tubes = []
 	state = "Playing"
 	bird = new Bird(sprites)

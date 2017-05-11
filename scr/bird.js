@@ -34,7 +34,6 @@ module.exports = class Bird {
 				}
 			}
 		}
-		console.log(this.hitbox)
 		this.jumpPower = 0.02
 		this.gravity = 0.0015
 		this.sprite = sprites.bird.idle
@@ -54,8 +53,6 @@ module.exports = class Bird {
 		translate(this.pos.x * width, this.pos.y * height)
 		rotate(this.vel.y * 10 - 0.1)
 		image(this.sprite, 0, 0, this.size.x * width, this.size.y * height)
-			//fill(255)
-			//rect(this.hitbox.x1, this.hitbox.y1, this.hitbox.x2, this.hitbox.y2)
 
 		pop()
 	}
