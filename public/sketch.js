@@ -18,8 +18,13 @@ let spawner
 
 function preload() {
 	sprites.bird = {
-		idle: loadImage("assets/TrashyDove1.png"),
-		flying: loadImage("assets/TrashyDove2.png")
+		idle: loadImage("assets/bird/TrashyDove1.png"),
+		flying: loadImage("assets/bird/TrashyDove2.png")
+	}
+	sprites.tube = {
+		top: loadImage("assets/tube/TubeTop.png"),
+		bottom: loadImage("assets/tube/TubeBottom.png"),
+		body: loadImage("assets/tube/TubeBody.png")
 	}
 	sprites.menu = loadImage("assets/play-button.png")
 }
@@ -47,7 +52,7 @@ function init() {
 
 function draw() {
 
-	background('#35e052')
+	background('#22e4f9')
 
 	if (state === "Playing") {
 
