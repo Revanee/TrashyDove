@@ -50,7 +50,6 @@ function draw() {
 
 	//draw elements
 	push()
-	rotateX(-0.1)
 
 	translate(-width / 2, -height / 2)
 
@@ -62,6 +61,7 @@ function draw() {
 	if (state === "Menu") {
 		menu.draw()
 	}
+
 	pop()
 
 }
