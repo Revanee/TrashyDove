@@ -1,9 +1,6 @@
 /*jshint node: true, esversion: 6, asi: true*/
 /*globals background, createCanvas, document, resizeCanvas, rect, rectMode, CENTER, width, height, keyCode, WEBGL, window, fill, translate, setTimeout, mouseX, mouseY, text, textSize, loadImage, image, imageMode */
 
-let Bird = require('./scr/bird.js')
-let Tube = require('./scr/tube.js')
-
 let prevTime
 
 let state = "Menu"
@@ -17,7 +14,6 @@ let sprites = {}
 let spawner
 
 let score
-
 
 //load sprites
 function preload() {

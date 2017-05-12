@@ -1,7 +1,7 @@
 /*jshint node: true, esversion: 6, asi: true*/
 /*global image, width, height, sprites*/
 
-module.exports = class Bird {
+class Bird {
 	constructor() {
 		this.pos = {
 			x: 0.2,

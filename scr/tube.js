@@ -1,7 +1,7 @@
 /*jshint node: true, esversion: 6, asi: true*/
 /*global image, width, height, sprites, imageMode, CORNER*/
 
-module.exports = class Tube {
+class Tube {
 	constructor() {
 		this.passed = false
 		this.speed = 0.003
