@@ -51,8 +51,10 @@ class Bird {
 		push()
 
 		translate(this.pos.x * width, this.pos.y * height)
-		rotate(this.vel.y * 10 - 0.1)
-		image(this.sprite, 0, 0, this.size.x * width, this.size.y * height)
+			//rotate(this.vel.y * 10 - 0.1)
+		specularMaterial(0, 0, 0, 0)
+		texture(this.sprite)
+		plane(this.size.x * width, this.size.y * height)
 
 		pop()
 	}

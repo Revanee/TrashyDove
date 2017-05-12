@@ -1,14 +1,13 @@
 /*jshint node: true, esversion: 6, asi: true*/
-/*globals background, createCanvas, document, resizeCanvas, rect, rectMode, CENTER, width, height, keyCode, WEBGL, window, fill, translate, setTimeout, mouseX, mouseY, text, textSize, loadImage, image, imageMode */
+/*globals background, createCanvas, document, resizeCanvas, rect, CENTER, width, height, keyCode, WEBGL, window, fill, setTimeout, mouseX, mouseY, text, textSize, loadImage, image, Bird, Tube, push, pop */
 
-let prevTime
+let oldTime
+let elapsedTime
 
 let state = "Menu"
 
 let bird
-
 let tubes = []
-
 let sprites = {}
 
 let spawner
@@ -31,14 +30,18 @@ function preload() {
 
 //initialize state of game
 function setup() {
-	createCanvas(document.body.offsetWidth, document.body.offsetHeight)
+	createCanvas(document.body.offsetWidth, document.body.offsetHeight, WEBGL)
 	bird = new Bird(sprites)
 	init()
-	prevTime = window.performance.now()
+	oldTime = window.performance.now()
 }
 
 //main looping function, draw current frame
 function draw() {
+
+	//update time elapsed between frames
+	elapsedTime = window.performance.now() - oldTime
+	oldTime = window.performance.now()
 
 	//update game logic
 	if (state === "Playing") {
@@ -46,6 +49,11 @@ function draw() {
 	}
 
 	//draw elements
+	push()
+	rotateX(-0.1)
+
+	translate(-width / 2, -height / 2)
+
 	background('#22e4f9')
 	bird.draw()
 	tubes.forEach(function (tube) {
@@ -54,20 +62,20 @@ function draw() {
 	if (state === "Menu") {
 		menu.draw()
 	}
-
-	//update time elapsed between frames
-	prevTime = window.performance.now()
+	pop()
 
 }
 
 //update game logic once every frame
 function update() {
-	let elapsedTime = window.performance.now() - prevTime
-	let targetTime = 16
+	let targetTime = 1000 / 60
 	let deltaT = elapsedTime / targetTime
 
 	bird.update(deltaT)
 
+	if (tubes.length > 3) {
+		tubes.splice(0, 1)
+	}
 	tubes.forEach(function (tube) {
 		tube.update(deltaT)
 		if (tube.pos.x + tube.size.x < bird.pos.x && !tube.passed) {
@@ -113,12 +121,15 @@ let menu = {
 		y: 0
 	},
 	draw: function () {
-		imageMode(CENTER)
+		texture(sprites.menu)
+		push()
+		translate(this.pos.x, this.pos.y)
 		if (this.hover()) {
-			image(sprites.menu, this.pos.x, this.pos.y, this.size.x * 1.2, this.size.y * 1.2)
+			plane(this.size.x * 1.2, this.size.y * 1.2)
 		} else {
-			image(sprites.menu, this.pos.x, this.pos.y, this.size.x, this.size.y)
+			plane(this.size.x, this.size.y)
 		}
+		pop()
 	},
 	hover: function () {
 		if (mouseX < this.pos.x + this.size.x / 2 && mouseX > this.pos.x - this.size.x / 2 &&

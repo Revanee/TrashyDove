@@ -8,7 +8,7 @@ class Tube {
 		this.hole = 0.2
 		this.pos = {
 			y: Math.random(),
-			x: 1
+			x: 1.1
 		}
 		this.size = {
 			x: 0.1
@@ -16,7 +16,36 @@ class Tube {
 	}
 
 	draw() {
-		imageMode(CORNER)
+
+		texture(sprites.tube.body)
+		for (let i = 1; i < 10; i++) {
+			push()
+			translate(width * this.pos.x, (this.pos.y - this.hole - 0.1 - 0.1 * i) * height)
+			plane(this.size.x * width, 0.1 * height)
+			pop()
+		}
+		for (let i = 1; i < 10; i++) {
+			push()
+			translate(width * this.pos.x, (this.pos.y + this.hole + 0.1 * i) * height)
+			plane(this.size.x * width, 0.1 * height)
+			pop()
+		}
+
+		texture(sprites.tube.top)
+		push()
+		translate(width * this.pos.x, (this.pos.y - this.hole - 0.1) * height)
+		plane(this.size.x * width, 0.1 * height)
+		pop()
+
+		texture(sprites.tube.bottom)
+		push()
+		translate(width * this.pos.x, (this.pos.y + this.hole) * height)
+		plane(this.size.x * width, 0.1 * height)
+		pop()
+
+
+		//old
+		/*
 		for (let i = 1; i < 10; i++) {
 			image(sprites.tube.body, width * this.pos.x, (this.pos.y - this.hole - 0.1 - 0.1 * i) * height, this.size.x * width, 0.1 * height)
 		}
@@ -25,9 +54,10 @@ class Tube {
 		for (let i = 1; i < 10; i++) {
 			image(sprites.tube.body, width * this.pos.x, (this.pos.y + this.hole + 0.1 * i) * height, this.size.x * width, 0.1 * height)
 		}
+		*/
 	}
 
 	update(deltaT) {
-		this.pos.x -= this.speed
+		this.pos.x -= this.speed * deltaT
 	}
 }
