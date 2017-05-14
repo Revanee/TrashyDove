@@ -4,14 +4,12 @@
 class Tube {
 	constructor() {
 		this.passed = false
-		this.speed = 0.003
-		this.hole = 0.2
+		this.speed = width / 100
+		this.hole = Math.random() * (height / 3 - bird.size) + bird.size
+		this.size = ((height + width) / 2) / 5
 		this.pos = {
-			y: Math.random(),
-			x: 1.1
-		}
-		this.size = {
-			x: 0.1
+			y: Math.random() * height - height / 2 + 50,
+			x: width / 2 + this.size
 		}
 	}
 
@@ -20,27 +18,27 @@ class Tube {
 		texture(sprites.tube.body)
 		for (let i = 1; i < 10; i++) {
 			push()
-			translate(width * this.pos.x, (this.pos.y - this.hole - 0.1 - 0.1 * i) * height)
-			plane(this.size.x * width, 0.1 * height)
+			translate(this.pos.x, this.pos.y - this.hole - this.size - this.size * i)
+			plane(this.size, this.size)
 			pop()
 		}
 		for (let i = 1; i < 10; i++) {
 			push()
-			translate(width * this.pos.x, (this.pos.y + this.hole + 0.1 * i) * height)
-			plane(this.size.x * width, 0.1 * height)
+			translate(this.pos.x, this.pos.y + this.hole + this.size * i)
+			plane(this.size, this.size)
 			pop()
 		}
 
 		texture(sprites.tube.top)
 		push()
-		translate(width * this.pos.x, (this.pos.y - this.hole - 0.1) * height)
-		plane(this.size.x * width, 0.1 * height)
+		translate(this.pos.x, this.pos.y - this.hole - this.size)
+		plane(this.size, this.size)
 		pop()
 
 		texture(sprites.tube.bottom)
 		push()
-		translate(width * this.pos.x, (this.pos.y + this.hole) * height)
-		plane(this.size.x * width, 0.1 * height)
+		translate(this.pos.x, this.pos.y + this.hole)
+		plane(this.size, this.size)
 		pop()
 
 

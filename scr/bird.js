@@ -4,19 +4,16 @@
 class Bird {
 	constructor() {
 		this.pos = {
-			x: 0.2,
-			y: 0.3
+			x: -width / 4,
+			y: -height / 4
 		}
 		this.vel = {
 			x: 0,
 			y: 0
 		}
-		this.size = {
-			x: 0.1,
-			y: 0.1
-		}
+		this.size = ((height + width) / 2) / 10
 		this.hitbox = {
-			offset: 0.02,
+			offset: this.size * 0.8,
 			pos: {
 				x: () => {
 					return this.pos.x + this.hitbox.offset
@@ -25,17 +22,12 @@ class Bird {
 					return this.pos.y + this.hitbox.offset
 				}
 			},
-			size: {
-				x: () => {
-					return this.size.x - this.hitbox.offset
-				},
-				y: () => {
-					return this.size.y - this.hitbox.offset
-				}
+			size: () => {
+				return this.size - this.hitbox.offset
 			}
 		}
-		this.jumpPower = 0.02
-		this.gravity = 0.0015
+		this.gravity = height / 700
+		this.jumpPower = this.gravity * 12
 		this.sprite = sprites.bird.idle
 		this.animationTimeout
 	}
@@ -50,11 +42,11 @@ class Bird {
 
 		push()
 
-		translate(this.pos.x * width, this.pos.y * height)
-		rotateZ(-this.vel.y * 10 + 0.1)
+		translate(this.pos.x, this.pos.y)
+		rotateZ((-this.vel.y / this.jumpPower) / 2)
 		specularMaterial(0, 0, 0, 0)
 		texture(this.sprite)
-		plane(this.size.x * width, this.size.y * height)
+		plane(this.size, this.size.y)
 
 		pop()
 	}
@@ -71,12 +63,12 @@ class Bird {
 
 	collides(tubes) {
 		let collided = false
-		if (this.pos.y < 0 || this.pos.y > 1) collided = true
+		if (this.hitbox.pos.y() < -height / 2 || this.hitbox.pos.y() - this.hitbox.size() > height / 2) collided = true
 
 		let bird = this
 		tubes.forEach(function (tube) {
-			if (bird.hitbox.pos.x() + bird.hitbox.size.x() > tube.pos.x && bird.hitbox.pos.x() < tube.pos.x + tube.size.x) {
-				if (bird.hitbox.pos.y() < tube.pos.y - tube.hole || bird.hitbox.pos.y() + bird.hitbox.size.y() > tube.pos.y + tube.hole) {
+			if (bird.hitbox.pos.x() + bird.hitbox.size() > tube.pos.x && bird.hitbox.pos.x() < tube.pos.x + tube.size) {
+				if (bird.hitbox.pos.y() < tube.pos.y - tube.hole || bird.hitbox.pos.y() + bird.hitbox.size() > tube.pos.y + tube.hole) {
 					collided = true
 				}
 			}

@@ -48,10 +48,16 @@ function draw() {
 		update()
 	}
 
+	//splice
+	if (tubes.length > 3) {
+		tubes.splice(0, 1)
+	}
+
 	//draw elements
 	push()
 
-	translate(-width / 2, -height / 2)
+	//translate(width / 2, 0)
+
 
 	background('#22e4f9')
 	bird.draw()
@@ -73,11 +79,10 @@ function update() {
 
 	bird.update(deltaT)
 
-	if (tubes.length > 3) {
-		tubes.splice(0, 1)
-	}
 	tubes.forEach(function (tube) {
 		tube.update(deltaT)
+
+		//score
 		if (tube.pos.x + tube.size.x < bird.pos.x && !tube.passed) {
 			tube.passed = true
 			score++
@@ -103,7 +108,7 @@ function live() {
 	tubes.push(new Tube())
 	spawner = setInterval(function () {
 		tubes.push(new Tube())
-	}, 3000)
+	}, 2000)
 
 	init()
 
@@ -117,23 +122,24 @@ let menu = {
 		y: 0
 	},
 	size: {
-		x: 0,
-		y: 0
+		x: 100,
+		y: 100
 	},
 	draw: function () {
 		texture(sprites.menu)
 		push()
-		translate(this.pos.x, this.pos.y)
-		if (this.hover()) {
-			plane(this.size.x * 1.2, this.size.y * 1.2)
-		} else {
-			plane(this.size.x, this.size.y)
-		}
+		resetMatrix()
+			//		if (this.hover()) {
+			//			plane(this.size.x * 1.2, this.size.y * 1.2)
+			//		} else {
+			//			plane(this.size.x, this.size.y)
+			//		}
+		plane(this.size.x, this.size.y)
 		pop()
 	},
 	hover: function () {
-		if (mouseX < this.pos.x + this.size.x / 2 && mouseX > this.pos.x - this.size.x / 2 &&
-			mouseY < this.pos.y + this.size.y / 2 && mouseY > this.pos.y - this.size.y / 2) {
+		if (mouseX < width / 2 + this.size.x / 2 && mouseX > width / 2 - this.size.x / 2 &&
+			mouseY < height / 2 + this.size.y / 2 && mouseY > height / 2 - this.size.y / 2) {
 			return true
 		} else return false
 	}
@@ -168,10 +174,6 @@ function windowResized() {
 
 //adjust sizes based on proportions
 function init() {
-	menu.pos.x = width / 2
-	menu.pos.y = height / 2
-	menu.size.x = width / 6
-	menu.size.y = width / 6
-
-	bird.size.x = height / width * bird.size.y
+	menu.size.x = ((height + width) / 2) / 2
+	menu.size.y = menu.size.x
 }
