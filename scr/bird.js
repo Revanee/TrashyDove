@@ -29,7 +29,7 @@ class Bird {
 		this.gravity = height / 700
 		this.jumpPower = this.gravity * 12
 		this.sprite = sprites.bird.idle
-		this.animationTimeout
+		this.animationTimeout = 100
 	}
 
 	update(deltaT) {
@@ -58,7 +58,7 @@ class Bird {
 		let bird = this
 		setTimeout(function () {
 			bird.sprite = sprites.bird.idle
-		}, 100)
+		}, this.animationTimeout)
 	}
 
 	collides(tubes) {
