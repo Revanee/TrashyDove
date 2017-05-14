@@ -15,6 +15,7 @@ class Tube {
 
 	draw() {
 
+		//not in use
 		texture(sprites.tube.body)
 		for (let i = 1; i < 10; i++) {
 			push()
@@ -40,19 +41,38 @@ class Tube {
 		translate(this.pos.x, this.pos.y + this.hole)
 		plane(this.size, this.size)
 		pop()
+	}
 
+	drawTop() {
+		//texture(sprites.tube.top)
+		push()
+		translate(this.pos.x, this.pos.y - this.hole - this.size)
+		plane(this.size, this.size)
+		pop()
+	}
 
-		//old
-		/*
+	drawBody() {
+		//texture(sprites.tube.body)
 		for (let i = 1; i < 10; i++) {
-			image(sprites.tube.body, width * this.pos.x, (this.pos.y - this.hole - 0.1 - 0.1 * i) * height, this.size.x * width, 0.1 * height)
+			push()
+			translate(this.pos.x, this.pos.y - this.hole - this.size - this.size * i)
+			plane(this.size, this.size)
+			pop()
 		}
-		image(sprites.tube.top, width * this.pos.x, (this.pos.y - this.hole - 0.1) * height, this.size.x * width, 0.1 * height)
-		image(sprites.tube.bottom, width * this.pos.x, (this.pos.y + this.hole) * height, this.size.x * width, 0.1 * height)
 		for (let i = 1; i < 10; i++) {
-			image(sprites.tube.body, width * this.pos.x, (this.pos.y + this.hole + 0.1 * i) * height, this.size.x * width, 0.1 * height)
+			push()
+			translate(this.pos.x, this.pos.y + this.hole + this.size * i)
+			plane(this.size, this.size)
+			pop()
 		}
-		*/
+	}
+
+	drawBottom() {
+		//texture(sprites.tube.bottom)
+		push()
+		translate(this.pos.x, this.pos.y + this.hole)
+		plane(this.size, this.size)
+		pop()
 	}
 
 	update(deltaT) {

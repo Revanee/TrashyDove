@@ -56,14 +56,24 @@ function draw() {
 	//draw elements
 	push()
 
-	//translate(width / 2, 0)
-
-
 	background('#22e4f9')
 	bird.draw()
+
+	texture(sprites.tube.top)
 	tubes.forEach(function (tube) {
-		tube.draw()
+		tube.drawTop()
 	})
+
+	texture(sprites.tube.body)
+	tubes.forEach(function (tube) {
+		tube.drawBody()
+	})
+
+	texture(sprites.tube.bottom)
+	tubes.forEach(function (tube) {
+		tube.drawBottom()
+	})
+
 	if (state === "Menu") {
 		menu.draw()
 	}
