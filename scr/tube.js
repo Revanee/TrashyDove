@@ -44,7 +44,6 @@ class Tube {
 	}
 
 	drawTop() {
-		//texture(sprites.tube.top)
 		push()
 		translate(this.pos.x, this.pos.y - this.hole - this.size)
 		plane(this.size, this.size)
@@ -52,7 +51,6 @@ class Tube {
 	}
 
 	drawBody() {
-		//texture(sprites.tube.body)
 		for (let i = 1; i < 10; i++) {
 			push()
 			translate(this.pos.x, this.pos.y - this.hole - this.size - this.size * i)
@@ -68,7 +66,6 @@ class Tube {
 	}
 
 	drawBottom() {
-		//texture(sprites.tube.bottom)
 		push()
 		translate(this.pos.x, this.pos.y + this.hole)
 		plane(this.size, this.size)

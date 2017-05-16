@@ -46,7 +46,6 @@ class Bird {
 		rotateZ((-this.vel.y / this.jumpPower) / 2)
 		specularMaterial(0, 0, 0, 0)
 		texture(this.sprite)
-		_renderer.GL.texParameterf( _renderer.GL.TEXTURE_2D, _renderer.GL.TEXTURE_MAG_FILTER, _renderer.GL.NEAREST)
 		plane(this.size, this.size.y)
 
 		pop()

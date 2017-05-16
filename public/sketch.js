@@ -60,19 +60,16 @@ function draw() {
 	bird.draw()
 
 	texture(sprites.tube.top)
-	_renderer.GL.texParameterf( _renderer.GL.TEXTURE_2D, _renderer.GL.TEXTURE_MAG_FILTER, _renderer.GL.NEAREST)
 	tubes.forEach(function (tube) {
 		tube.drawTop()
 	})
 
 	texture(sprites.tube.body)
-	_renderer.GL.texParameterf( _renderer.GL.TEXTURE_2D, _renderer.GL.TEXTURE_MAG_FILTER, _renderer.GL.NEAREST)
 	tubes.forEach(function (tube) {
 		tube.drawBody()
 	})
 
 	texture(sprites.tube.bottom)
-	_renderer.GL.texParameterf( _renderer.GL.TEXTURE_2D, _renderer.GL.TEXTURE_MAG_FILTER, _renderer.GL.NEAREST)
 	tubes.forEach(function (tube) {
 		tube.drawBottom()
 	})
