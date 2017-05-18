@@ -79,7 +79,6 @@ function draw() {
     }
 
     pop()
-
 }
 
 //update game logic once every frame
@@ -132,25 +131,21 @@ let menu = {
         x: 0,
         y: 0
     },
-    size: {
-        x: 100,
-        y: 100
-    },
+    size: 0,
     draw: function() {
         texture(sprites.menu)
-        push()
-        resetMatrix()
-            //		if (this.hover()) {
-            //			plane(this.size.x * 1.2, this.size.y * 1.2)
-            //		} else {
-            //			plane(this.size.x, this.size.y)
-            //		}
-        plane(this.size.x, this.size.y)
-        pop()
+
+
+
+        if (this.hover()) {
+            plane(this.size * 1.2, this.size * 1.2)
+        } else {
+            plane(this.size, this.size)
+        }
     },
     hover: function() {
-        if (mouseX < width / 2 + this.size.x / 2 && mouseX > width / 2 - this.size.x / 2 &&
-            mouseY < height / 2 + this.size.y / 2 && mouseY > height / 2 - this.size.y / 2) {
+        if (mouseX < width / 2 + this.size / 2 && mouseX > width / 2 - this.size / 2 &&
+            mouseY < height / 2 + this.size / 2 && mouseY > height / 2 - this.size / 2) {
             return true
         } else return false
     }
@@ -185,6 +180,5 @@ function windowResized() {
 
 //adjust sizes based on proportions
 function init() {
-    menu.size.x = ((height + width) / 2) / 2
-    menu.size.y = menu.size.x
+    menu.size = ((height + width) / 2) / 3
 }
