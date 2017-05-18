@@ -24,7 +24,7 @@ class Bird {
         }
         this.gravity = height / 700
         this.jumpPower = this.gravity * 12
-        this.sprite = sprites.bird.idle
+        this.sprite = sprites.bird
         this.animationTimeout = 100
     }
 
@@ -61,12 +61,16 @@ class Bird {
 
     jump() {
         this.vel.y = -this.jumpPower
-        this.sprite = sprites.bird.flying
 
-        let bird = this
+        if(this.sprite.playing()) this.sprite.pause()
+        this.sprite.playOnce()
+
+        sounds.bird.flap[Math.floor(Math.random() * sounds.bird.flap.length)].play()
+
+        /*let bird = this
         setTimeout(function() {
             bird.sprite = sprites.bird.idle
-        }, this.animationTimeout)
+        }, this.animationTimeout)*/
     }
 
     collides(tubes) {
@@ -78,7 +82,10 @@ class Bird {
         }
 
         tubes.forEach(function(tube) {
-            if(tube.collides(hitbox)) collided = true
+            if(tube.collides(hitbox)) {
+                collided = true
+                sounds.tube.hit[Math.floor(Math.random()*sounds.tube.hit.length)].play()
+            }
         })
 
         return collided

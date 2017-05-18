@@ -9,6 +9,7 @@ let state = "Menu"
 let bird
 let tubes = []
 let sprites = {}
+let sounds = {}
 
 let spawner
 
@@ -16,16 +17,24 @@ let score
 
 //load sprites
 function preload() {
-    sprites.bird = {
-        idle: loadImage("assets/bird/TrashyDove1.png"),
-        flying: loadImage("assets/bird/TrashyDove2.png")
-    }
+    sprites.bird = loadGif('assets/sprites/bird/TrashyDove.gif')
     sprites.tube = {
-        top: loadImage("assets/tube/TubeTop.png"),
-        bottom: loadImage("assets/tube/TubeBottom.png"),
-        body: loadImage("assets/tube/TubeBody.png")
+        top: loadImage('assets/sprites/tube/TubeTop.png'),
+        bottom: loadImage('assets/sprites/tube/TubeBottom.png'),
+        body: loadImage('assets/sprites/tube/TubeBody.png')
     }
-    sprites.menu = loadImage("assets/play-button.png")
+    sprites.menu = loadImage('assets/sprites/play-button.png')
+
+    sounds.tube = {
+        hit: [loadSound('assets/sounds/tube/hit_1.flac')]
+    }
+    sounds.bird = {
+        flap: [loadSound('assets/sounds/bird/flap_1.flac'),
+            loadSound('assets/sounds/bird/flap_2.flac'),
+            loadSound('assets/sounds/bird/flap_3.flac'),
+            loadSound('assets/sounds/bird/flap_4.flac'),
+        ]
+    }
 }
 
 //initialize state of game
