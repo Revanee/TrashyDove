@@ -63,6 +63,8 @@ class Bird {
         this.vel.y = -this.jumpPower
 
         if(this.sprite.playing()) this.sprite.pause()
+
+        this.sprite.frame(0)
         this.sprite.playOnce()
 
         sounds.bird.flap[Math.floor(Math.random() * sounds.bird.flap.length)].play()
