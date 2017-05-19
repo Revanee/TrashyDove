@@ -1,6 +1,3 @@
-/*jshint node: true, esversion: 6, asi: true*/
-/*global image, width, height, sprites*/
-
 class Bird {
     constructor() {
         this.pos = {
@@ -25,12 +22,17 @@ class Bird {
         this.gravity = height / 700
         this.jumpPower = this.gravity * 12
         this.sprite = sprites.bird
-        this.animationTimeout = 100
     }
 
     update(deltaT) {
         this.vel.y += this.gravity * deltaT
         this.pos.y += this.vel.y * deltaT
+
+        //Make sure animation plays only once
+        if (this.sprite.playing() && this.sprite.frames().length - 1 == this.sprite.frame()) {
+            this.sprite.pause()
+            this.sprite.frame(0)
+        }
     }
 
     draw() {
@@ -40,7 +42,7 @@ class Bird {
         translate(this.pos.x, this.pos.y)
         rotateZ((-this.vel.y / this.jumpPower) / 2)
         specularMaterial(0, 0, 0, 0)
-        texture(this.sprite)
+        _texture(this.sprite)
         plane(this.size, this.size.y)
 
         pop()
@@ -60,19 +62,15 @@ class Bird {
     }
 
     jump() {
+        //Apply velocity
         this.vel.y = -this.jumpPower
 
-        if(this.sprite.playing()) this.sprite.pause()
-
+        //Start animation
         this.sprite.frame(0)
-        this.sprite.playOnce()
+        this.sprite.play()
 
+        //Play a random flap sound
         sounds.bird.flap[Math.floor(Math.random() * sounds.bird.flap.length)].play()
-
-        /*let bird = this
-        setTimeout(function() {
-            bird.sprite = sprites.bird.idle
-        }, this.animationTimeout)*/
     }
 
     collides(tubes) {

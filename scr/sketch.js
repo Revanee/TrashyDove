@@ -17,6 +17,7 @@ let score
 
 //load sprites
 function preload() {
+
     sprites.bird = loadGif('assets/sprites/bird/TrashyDove.gif')
     sprites.tube = {
         top: loadImage('assets/sprites/tube/TubeTop.png'),
@@ -40,6 +41,7 @@ function preload() {
 //initialize state of game
 function setup() {
     createCanvas(document.body.offsetWidth, document.body.offsetHeight, WEBGL)
+
     bird = new Bird(sprites)
     init()
     oldTime = window.performance.now()
@@ -47,7 +49,6 @@ function setup() {
 
 //main looping function, draw current frame
 function draw() {
-
     //update time elapsed between frames
     elapsedTime = window.performance.now() - oldTime
     oldTime = window.performance.now()
@@ -68,17 +69,17 @@ function draw() {
     background('#22e4f9')
     bird.draw()
 
-    texture(sprites.tube.top)
+    _texture(sprites.tube.top)
     tubes.forEach(function(tube) {
         tube.drawTop()
     })
 
-    texture(sprites.tube.body)
+    _texture(sprites.tube.body)
     tubes.forEach(function(tube) {
         tube.drawBody()
     })
 
-    texture(sprites.tube.bottom)
+    _texture(sprites.tube.bottom)
     tubes.forEach(function(tube) {
         tube.drawBottom()
     })
@@ -142,7 +143,7 @@ let menu = {
     },
     size: 0,
     draw: function() {
-        texture(sprites.menu)
+        _texture(sprites.menu)
 
 
 
@@ -191,3 +192,44 @@ function windowResized() {
 function init() {
     menu.size = ((height + width) / 2) / 3
 }
+
+//Override library functions
+
+//Disable texture filtering for textures
+let _texture = function (arg) {
+    texture(arg)
+    _renderer.GL.texParameteri(_renderer.GL.TEXTURE_2D, _renderer.GL.TEXTURE_MAG_FILTER, _renderer.GL.NEAREST)
+}
+
+//Disable auto_play for gifs
+let loadGif = function(url, cb) {
+  var gif = new SuperGif({
+    gif: url,
+    p5inst: this,
+    auto_play: false
+  });
+
+  gif.load(cb);
+
+  var p5graphic = gif.buffer();
+
+  p5graphic.play = gif.play;
+  p5graphic.pause = gif.pause;
+  p5graphic.playing = gif.get_playing;
+  p5graphic.frames = gif.get_frames;
+  p5graphic.totalFrames = gif.get_length;
+
+  p5graphic.loaded = function() {
+    return !gif.get_loading();
+  };
+
+  p5graphic.frame = function(num) {
+    if (typeof num === 'number') {
+      gif.move_to(num);
+    } else {
+      return gif.get_current_frame();
+    }
+  };
+
+  return p5graphic;
+};
