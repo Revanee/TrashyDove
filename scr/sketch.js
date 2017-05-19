@@ -113,6 +113,7 @@ function update() {
     if (bird.collides(tubes)) {
         //handle death
         state = "Menu"
+        bird.die()
         clearInterval(spawner)
         console.log("Score: " + score)
     }

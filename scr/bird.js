@@ -90,4 +90,9 @@ class Bird {
 
         return collided
     }
+
+    die() {
+        this.sprite.pause()
+        this.sprite.frame(0)
+    }
 }
