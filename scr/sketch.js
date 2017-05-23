@@ -5,6 +5,7 @@ let state = "Menu"
 
 let bird
 let tubes = []
+let clouds = []
 let sprites = {}
 let sounds = {}
 
@@ -40,7 +41,14 @@ function setup() {
     createCanvas(document.body.offsetWidth, document.body.offsetHeight, WEBGL)
 
     bird = new Bird(sprites)
+
+    clouds.push(new Cloud())
+    setInterval(function() {
+        clouds.push(new Cloud())
+    }, 1000)
+
     init()
+
     oldTime = window.performance.now()
 }
 
@@ -51,19 +59,25 @@ function draw() {
     oldTime = window.performance.now()
 
     //update game logic
-    if (state === "Playing") {
-        update()
-    }
+    update()
 
-    //splice
+    //splice arrays
+    //TODO: use a better way for culling
     if (tubes.length > 3) {
         tubes.splice(0, 1)
     }
+    if (clouds.length > 100) {
+        clouds.splice(0, 1)
+    }
 
     //draw elements
-    push()
 
     background('#22e4f9')
+
+    clouds.forEach(function(cloud) {
+        cloud.draw()
+    })
+
     bird.draw()
 
     _texture(sprites.tube.top)
@@ -84,8 +98,6 @@ function draw() {
     if (state === "Menu") {
         menu.draw()
     }
-
-    pop()
 }
 
 //update game logic once every frame
@@ -93,26 +105,32 @@ function update() {
     let targetTime = 1000 / 60
     let deltaT = elapsedTime / targetTime
 
-    bird.update(deltaT)
-
-    tubes.forEach(function(tube) {
-        tube.update(deltaT)
-
-        //score
-        if (tube.pos.x + tube.size < bird.pos.x && !tube.passed) {
-            tube.passed = true
-            score++
-            console.log(score)
-        }
+    clouds.forEach(function(cloud) {
+        cloud.update(deltaT)
     })
 
-    //check for death
-    if (bird.collides(tubes)) {
-        //handle death
-        state = "Menu"
-        bird.die()
-        clearInterval(spawner)
-        console.log("Score: " + score)
+    if (state === "Playing") {
+        bird.update(deltaT)
+
+        tubes.forEach(function(tube) {
+            tube.update(deltaT)
+
+            //score
+            if (tube.pos.x + tube.size < bird.pos.x && !tube.passed) {
+                tube.passed = true
+                score++
+                console.log(score)
+            }
+        })
+
+        //check for death
+        if (bird.collides(tubes)) {
+            //handle death
+            state = "Menu"
+            bird.die()
+            clearInterval(spawner)
+            console.log("Score: " + score)
+        }
     }
 }
 
