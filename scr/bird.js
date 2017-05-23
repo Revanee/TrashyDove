@@ -8,7 +8,7 @@ class Bird {
             x: 0,
             y: 0
         }
-        this.size = ((height + width) / 2) / 10
+        this.size = height / 10
         this.getHitbox = () => {
             let offset = 0.5
             return {
