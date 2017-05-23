@@ -91,6 +91,8 @@ function draw() {
 
     background('#22e4f9')
 
+    //Use a better way to optimize
+    texture(clouds[0].sprite)
     clouds.forEach(function(cloud) {
         cloud.draw()
     })

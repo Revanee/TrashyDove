@@ -11,7 +11,6 @@ class Cloud {
     }
 
     draw() {
-    	texture(this.sprite)
     	push()
     	translate(this.pos.x - width / 2, this.pos.y - height / 2)
     	plane(this.size, this.size)
