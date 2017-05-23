@@ -42,7 +42,7 @@ class Bird {
         translate(this.pos.x, this.pos.y)
         rotateZ((-this.vel.y / this.jumpPower) / 2)
         specularMaterial(0, 0, 0, 0)
-        _texture(this.sprite)
+        texture(this.sprite)
         plane(this.size, this.size.y)
 
         pop()

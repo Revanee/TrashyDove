@@ -54,6 +54,7 @@ function preload() {
 
 //initialize state of game
 function setup() {
+    override()
     createCanvas(document.body.offsetWidth, document.body.offsetHeight, WEBGL)
 
     bird = new Bird(sprites)
@@ -96,17 +97,17 @@ function draw() {
 
     bird.draw()
 
-    _texture(sprites.tube.top)
+    texture(sprites.tube.top)
     tubes.forEach(function(tube) {
         tube.drawTop()
     })
 
-    _texture(sprites.tube.body)
+    texture(sprites.tube.body)
     tubes.forEach(function(tube) {
         tube.drawBody()
     })
 
-    _texture(sprites.tube.bottom)
+    texture(sprites.tube.bottom)
     tubes.forEach(function(tube) {
         tube.drawBottom()
     })
@@ -183,17 +184,17 @@ let menu = {
 
             push()
             translate(this.size / 4, 0)
-            _texture(sprites.numbers[rightNum])
+            texture(sprites.numbers[rightNum])
             plane(this.size / 2, this.size)
 
             translate(-this.size / 2, 0)
-            _texture(sprites.numbers[leftNum])
+            texture(sprites.numbers[leftNum])
             plane(this.size / 2, this.size)
             pop()
         }
     },
     draw: function() {
-        _texture(sprites.menu.play)
+        texture(sprites.menu.play)
 
         if (this.hover()) {
             plane(this.size * 1.2, this.size * 1.2)
@@ -203,7 +204,7 @@ let menu = {
 
             //Draw best score
             push()
-            _texture(sprites.menu.best)
+            texture(sprites.menu.best)
             if (landscape) {
                 translate(-this.size, 0)
             } else {
@@ -220,7 +221,7 @@ let menu = {
             } else {
                 translate(0, this.size)
             }
-            _texture(sprites.menu.last)
+            texture(sprites.menu.last)
             plane(this.size, this.size)
             menu.drawNumber(score)
             pop()
@@ -265,9 +266,13 @@ function init() {
 //Override library functions
 
 //Disable texture filtering for textures
-let _texture = function(arg) {
-    texture(arg)
-    _renderer.GL.texParameteri(_renderer.GL.TEXTURE_2D, _renderer.GL.TEXTURE_MAG_FILTER, _renderer.GL.NEAREST)
+let override = function() {
+    console.log('overriding')
+    let _texture = texture
+    texture = function(arg) {
+        _texture(arg)
+        _renderer.GL.texParameteri(_renderer.GL.TEXTURE_2D, _renderer.GL.TEXTURE_MAG_FILTER, _renderer.GL.NEAREST)
+    }
 }
 
 //Disable auto_play for gifs
