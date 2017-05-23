@@ -13,7 +13,9 @@ let sounds = {}
 
 let spawner
 
-let score
+let score = 0
+
+let landscape
 
 //load sprites
 function preload() {
@@ -24,8 +26,22 @@ function preload() {
         bottom: loadImage('assets/sprites/tube/TubeBottom.png'),
         body: loadImage('assets/sprites/tube/TubeBody.png')
     }
-    sprites.menu = loadImage('assets/sprites/play-button.png')
-
+    sprites.menu = {
+        play: loadImage('assets/sprites/play-button.png'),
+        best: loadImage('assets/sprites/best.png'),
+        last: loadImage('assets/sprites/last.png')
+    }
+    sprites.numbers = [loadImage('assets/sprites/numbers/0.png'),
+        loadImage('assets/sprites/numbers/1.png'),
+        loadImage('assets/sprites/numbers/2.png'),
+        loadImage('assets/sprites/numbers/3.png'),
+        loadImage('assets/sprites/numbers/4.png'),
+        loadImage('assets/sprites/numbers/5.png'),
+        loadImage('assets/sprites/numbers/6.png'),
+        loadImage('assets/sprites/numbers/7.png'),
+        loadImage('assets/sprites/numbers/8.png'),
+        loadImage('assets/sprites/numbers/9.png'),
+    ]
     sounds.tube = {
         hit: [loadSound('assets/sounds/tube/hit_1.flac')]
     }
@@ -143,15 +159,56 @@ let menu = {
         y: 0
     },
     size: 0,
+    lastScore: 0,
+    bestScore: 0,
+    drawNumber: function(num) {
+        if (!(num > 100 || num < 0)) {
+            leftNum = Math.floor(num / 10)
+            rightNum = num - leftNum * 10
+
+            push()
+            translate(this.size / 4, 0)
+            _texture(sprites.numbers[rightNum])
+            plane(this.size / 2, this.size)
+
+            translate(-this.size / 2, 0)
+            _texture(sprites.numbers[leftNum])
+            plane(this.size / 2, this.size)
+            pop()
+        }
+    },
     draw: function() {
-        _texture(sprites.menu)
-
-
+        _texture(sprites.menu.play)
 
         if (this.hover()) {
             plane(this.size * 1.2, this.size * 1.2)
         } else {
+            //Draw play button
             plane(this.size, this.size)
+
+            //Draw best score
+            push()
+            _texture(sprites.menu.best)
+            if (landscape) {
+                translate(-this.size, 0)
+            } else {
+                translate(0, -this.size)
+            }
+            plane(this.size, this.size)
+            menu.drawNumber(13)
+            pop()
+
+            //Draw last score
+            push()
+            if (landscape) {
+                translate(this.size, 0)
+            } else {
+                translate(0, this.size)
+            }
+            _texture(sprites.menu.last)
+            plane(this.size, this.size)
+            menu.drawNumber(score)
+            pop()
         }
     },
     hover: function() {
@@ -159,6 +216,9 @@ let menu = {
             mouseY < height / 2 + this.size / 2 && mouseY > height / 2 - this.size / 2) {
             return true
         } else return false
+    },
+    init: function() {
+        menu.size = ((height + width) / 2) / 3
     }
 }
 
@@ -191,46 +251,48 @@ function windowResized() {
 
 //adjust sizes based on proportions
 function init() {
-    menu.size = ((height + width) / 2) / 3
+    menu.init()
+    if (width > height) landscape = true
+    else landscape = false
 }
 
 //Override library functions
 
 //Disable texture filtering for textures
-let _texture = function (arg) {
+let _texture = function(arg) {
     texture(arg)
     _renderer.GL.texParameteri(_renderer.GL.TEXTURE_2D, _renderer.GL.TEXTURE_MAG_FILTER, _renderer.GL.NEAREST)
 }
 
 //Disable auto_play for gifs
 let loadGif = function(url, cb) {
-  var gif = new SuperGif({
-    gif: url,
-    p5inst: this,
-    auto_play: false
-  });
+    var gif = new SuperGif({
+        gif: url,
+        p5inst: this,
+        auto_play: false
+    });
 
-  gif.load(cb);
+    gif.load(cb);
 
-  var p5graphic = gif.buffer();
+    var p5graphic = gif.buffer();
 
-  p5graphic.play = gif.play;
-  p5graphic.pause = gif.pause;
-  p5graphic.playing = gif.get_playing;
-  p5graphic.frames = gif.get_frames;
-  p5graphic.totalFrames = gif.get_length;
+    p5graphic.play = gif.play;
+    p5graphic.pause = gif.pause;
+    p5graphic.playing = gif.get_playing;
+    p5graphic.frames = gif.get_frames;
+    p5graphic.totalFrames = gif.get_length;
 
-  p5graphic.loaded = function() {
-    return !gif.get_loading();
-  };
+    p5graphic.loaded = function() {
+        return !gif.get_loading();
+    };
 
-  p5graphic.frame = function(num) {
-    if (typeof num === 'number') {
-      gif.move_to(num);
-    } else {
-      return gif.get_current_frame();
-    }
-  };
+    p5graphic.frame = function(num) {
+        if (typeof num === 'number') {
+            gif.move_to(num);
+        } else {
+            return gif.get_current_frame();
+        }
+    };
 
-  return p5graphic;
+    return p5graphic;
 };
