@@ -159,25 +159,16 @@ let menu = {
     }
 }
 
-//click
-function click() {
-    if (state === "Playing") bird.jump()
-    if (state === "Menu") {
-        if (menu.hover()) live()
-    }
-}
-
 //controls
 function keyPressed() {
     if (state === "Playing") bird.jump()
 }
 
 function mousePressed() {
-    click()
-}
-
-function touchStarted() {
-    click()
+    if (state === "Playing") bird.jump()
+    if (state === "Menu") {
+        if (menu.hover()) live()
+    }
 }
 
 //allow resizing
