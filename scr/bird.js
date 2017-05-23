@@ -17,7 +17,7 @@ class Bird {
                     y: this.pos.y - (this.size / 2) * offset
                 },
                 size: this.size * offset
-            };
+            }
         }
         this.gravity = height / 700
         this.jumpPower = this.gravity * 12

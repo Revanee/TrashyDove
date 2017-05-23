@@ -1,6 +1,3 @@
-/*jshint node: true, esversion: 6, asi: true*/
-/*globals background, createCanvas, document, resizeCanvas, rect, CENTER, width, height, keyCode, WEBGL, window, fill, setTimeout, mouseX, mouseY, text, textSize, loadImage, image, Bird, Tube, push, pop */
-
 let oldTime
 let elapsedTime
 
@@ -197,40 +194,40 @@ function init() {
 //Override library functions
 
 //Disable texture filtering for textures
-let _texture = function (arg) {
+let _texture = function(arg) {
     texture(arg)
     _renderer.GL.texParameteri(_renderer.GL.TEXTURE_2D, _renderer.GL.TEXTURE_MAG_FILTER, _renderer.GL.NEAREST)
 }
 
 //Disable auto_play for gifs
 let loadGif = function(url, cb) {
-  var gif = new SuperGif({
-    gif: url,
-    p5inst: this,
-    auto_play: false
-  });
+    var gif = new SuperGif({
+        gif: url,
+        p5inst: this,
+        auto_play: false
+    })
 
-  gif.load(cb);
+    gif.load(cb)
 
-  var p5graphic = gif.buffer();
+    var p5graphic = gif.buffer()
 
-  p5graphic.play = gif.play;
-  p5graphic.pause = gif.pause;
-  p5graphic.playing = gif.get_playing;
-  p5graphic.frames = gif.get_frames;
-  p5graphic.totalFrames = gif.get_length;
+    p5graphic.play = gif.play
+    p5graphic.pause = gif.pause
+    p5graphic.playing = gif.get_playing
+    p5graphic.frames = gif.get_frames
+    p5graphic.totalFrames = gif.get_length
 
-  p5graphic.loaded = function() {
-    return !gif.get_loading();
-  };
-
-  p5graphic.frame = function(num) {
-    if (typeof num === 'number') {
-      gif.move_to(num);
-    } else {
-      return gif.get_current_frame();
+    p5graphic.loaded = function() {
+        return !gif.get_loading()
     }
-  };
 
-  return p5graphic;
-};
+    p5graphic.frame = function(num) {
+        if (typeof num === 'number') {
+            gif.move_to(num)
+        } else {
+            return gif.get_current_frame()
+        }
+    }
+
+    return p5graphic
+}
