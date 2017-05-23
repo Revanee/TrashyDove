@@ -1,11 +1,9 @@
-/*jshint node: true, esversion: 6, asi: true*/
-/*global image, width, height, sprites, imageMode, CORNER*/
-
 class Tube {
     constructor() {
         this.passed = false
         this.speed = width / 100
-        this.hole = Math.random() * (height / 3 - bird.size) + bird.size
+        //Need to decide wether to keep same hole size or randomize
+        this.hole = /*Math.random() * (height / 8) +*/ bird.size
         this.size = ((height + width) / 2) / 5
         this.hitbox = {
             offset: 1,
@@ -22,7 +20,7 @@ class Tube {
             }
         }
         this.pos = {
-            y: Math.random() * height - height / 2 + 50,
+            y: Math.random() * (height - this.hole * 2) - (height / 2 - this.hole * 2),
             x: width / 2 + this.size
         }
     }

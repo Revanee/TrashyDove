@@ -1,6 +1,3 @@
-/*jshint node: true, esversion: 6, asi: true*/
-/*globals background, createCanvas, document, resizeCanvas, rect, CENTER, width, height, keyCode, WEBGL, window, fill, setTimeout, mouseX, mouseY, text, textSize, loadImage, image, Bird, Tube, push, pop */
-
 let oldTime
 let elapsedTime
 
@@ -8,6 +5,7 @@ let state = "Menu"
 
 let bird
 let tubes = []
+let clouds = []
 let sprites = {}
 let sounds = {}
 
@@ -59,7 +57,14 @@ function setup() {
     createCanvas(document.body.offsetWidth, document.body.offsetHeight, WEBGL)
 
     bird = new Bird(sprites)
+
+    clouds.push(new Cloud())
+    setInterval(function() {
+        clouds.push(new Cloud())
+    }, 1000)
+
     init()
+
     oldTime = window.performance.now()
 }
 
@@ -70,19 +75,25 @@ function draw() {
     oldTime = window.performance.now()
 
     //update game logic
-    if (state === "Playing") {
-        update()
-    }
+    update()
 
-    //splice
+    //splice arrays
+    //TODO: use a better way for culling
     if (tubes.length > 3) {
         tubes.splice(0, 1)
     }
+    if (clouds.length > 100) {
+        clouds.splice(0, 1)
+    }
 
     //draw elements
-    push()
 
     background('#22e4f9')
+
+    clouds.forEach(function(cloud) {
+        cloud.draw()
+    })
+
     bird.draw()
 
     _texture(sprites.tube.top)
@@ -103,8 +114,6 @@ function draw() {
     if (state === "Menu") {
         menu.draw()
     }
-
-    pop()
 }
 
 //update game logic once every frame
@@ -112,26 +121,32 @@ function update() {
     let targetTime = 1000 / 60
     let deltaT = elapsedTime / targetTime
 
-    bird.update(deltaT)
-
-    tubes.forEach(function(tube) {
-        tube.update(deltaT)
-
-        //score
-        if (tube.pos.x + tube.size < bird.pos.x && !tube.passed) {
-            tube.passed = true
-            score++
-            console.log(score)
-        }
+    clouds.forEach(function(cloud) {
+        cloud.update(deltaT)
     })
 
-    //check for death
-    if (bird.collides(tubes)) {
-        //handle death
-        state = "Menu"
-        bird.die()
-        clearInterval(spawner)
-        console.log("Score: " + score)
+    if (state === "Playing") {
+        bird.update(deltaT)
+
+        tubes.forEach(function(tube) {
+            tube.update(deltaT)
+
+            //score
+            if (tube.pos.x + tube.size < bird.pos.x && !tube.passed) {
+                tube.passed = true
+                score++
+                console.log(score)
+            }
+        })
+
+        //check for death
+        if (bird.collides(tubes)) {
+            //handle death
+            state = "Menu"
+            bird.die()
+            clearInterval(spawner)
+            console.log("Score: " + score)
+        }
     }
 }
 
@@ -222,25 +237,16 @@ let menu = {
     }
 }
 
-//click
-function click() {
-    if (state === "Playing") bird.jump()
-    if (state === "Menu") {
-        if (menu.hover()) live()
-    }
-}
-
 //controls
 function keyPressed() {
     if (state === "Playing") bird.jump()
 }
 
 function mousePressed() {
-    click()
-}
-
-function touchStarted() {
-    click()
+    if (state === "Playing") bird.jump()
+    if (state === "Menu") {
+        if (menu.hover()) live()
+    }
 }
 
 //allow resizing
@@ -270,29 +276,29 @@ let loadGif = function(url, cb) {
         gif: url,
         p5inst: this,
         auto_play: false
-    });
+    })
 
-    gif.load(cb);
+    gif.load(cb)
 
-    var p5graphic = gif.buffer();
+    var p5graphic = gif.buffer()
 
-    p5graphic.play = gif.play;
-    p5graphic.pause = gif.pause;
-    p5graphic.playing = gif.get_playing;
-    p5graphic.frames = gif.get_frames;
-    p5graphic.totalFrames = gif.get_length;
+    p5graphic.play = gif.play
+    p5graphic.pause = gif.pause
+    p5graphic.playing = gif.get_playing
+    p5graphic.frames = gif.get_frames
+    p5graphic.totalFrames = gif.get_length
 
     p5graphic.loaded = function() {
-        return !gif.get_loading();
-    };
+        return !gif.get_loading()
+    }
 
     p5graphic.frame = function(num) {
         if (typeof num === 'number') {
-            gif.move_to(num);
+            gif.move_to(num)
         } else {
-            return gif.get_current_frame();
+            return gif.get_current_frame()
         }
-    };
+    }
 
-    return p5graphic;
-};
+    return p5graphic
+}
