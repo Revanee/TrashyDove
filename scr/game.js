@@ -1,28 +1,18 @@
 class Game {
     constructor() {
-        this.state = "Menu"
+        this.state = "Playing"
         this.tubes = []
         this.bird = new Bird()
-        this.spawner
         this.score = {
             best: 0,
             last: 0
         }
-    }
-    live() {
-        screens.pop()
-
-        this.score.last = 0
-        this.tubes = []
-        this.state = "Playing"
-        this.bird = new Bird(sprites)
 
         this.tubes.push(new Tube(this))
         let g = this
         this.spawner = setInterval(function() {
             g.tubes.push(new Tube(g))
         }, 2000)
-
         this.bird.jump()
     }
     update(deltaT) {
@@ -59,9 +49,6 @@ class Game {
             }
         }
 
-    }
-    pause() {
-        screens.push(new Menu(this))
     }
     draw() {
         this.bird.draw()

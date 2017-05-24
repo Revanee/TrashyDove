@@ -22,6 +22,7 @@ class Bird {
         this.gravity = height / 700
         this.jumpPower = this.gravity * 12
         this.sprite = sprites.bird
+        this.sprite.pause()
     }
 
     update(deltaT) {
@@ -31,7 +32,9 @@ class Bird {
         //Make sure animation plays only once
         if (this.sprite.playing() && this.sprite.frames().length - 1 == this.sprite.frame()) {
             this.sprite.pause()
-            this.sprite.frame(0)
+            try {
+                this.sprite.frame(0)
+            } catch (e) {}
         }
     }
 
@@ -66,8 +69,10 @@ class Bird {
         this.vel.y = -this.jumpPower
 
         //Start animation
-        this.sprite.frame(0)
-        this.sprite.play()
+        try {
+            this.sprite.frame(0)
+            this.sprite.play()
+        } catch (e) {}
 
         //Play a random flap sound
         sounds.bird.flap[Math.floor(Math.random() * sounds.bird.flap.length)].play()

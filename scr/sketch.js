@@ -54,8 +54,6 @@ function setup() {
     screens.push(new Backdrop())
     screens.push(new Game())
 
-    screens[1].pause()
-
     oldTime = window.performance.now()
 }
 
@@ -88,11 +86,15 @@ function update() {
 
 //controls
 function keyPressed() {
-    screens[screens.length - 1].keyPressed()
+    try {
+        screens[screens.length - 1].keyPressed()
+    } catch (e) {}
 }
 
 function mousePressed() {
-    screens[screens.length - 1].mousePressed()
+    try {
+        screens[screens.length - 1].mousePressed()
+    } catch (e) {}
 }
 
 //allow resizing
@@ -100,7 +102,7 @@ function windowResized() {
     resizeCanvas(document.body.offsetWidth, document.body.offsetHeight)
 }
 
-//adjust sizes based on proportions
+//check if landscape
 function isLandscape() {
     if (width > height) return true
     else return false

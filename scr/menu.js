@@ -97,9 +97,15 @@ class Menu {
 
     }
     mousePressed() {
-        if (this.hover()) this.parent.live()
+        if (this.hover()) {
+            screens.pop()
+            screens.pop()
+            screens.push(new Game())
+        }
     }
     keyPressed() {
-        this.parent.live()
+        screens.pop()
+        screens.pop()
+        screens.push(new Game())
     }
 }
