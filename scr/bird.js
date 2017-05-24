@@ -77,7 +77,7 @@ class Bird {
         let collided = false
         let hitbox = this.getHitbox()
 
-        if (hitbox.pos.y + hitbox.size < -height / 2 || hitbox.pos.y > height / 2) {
+        if (hitbox.pos.y > height / 2) {
             collided = true
         }
 
