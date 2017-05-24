@@ -8,7 +8,9 @@ let tubes = []
 let sprites = {}
 let sounds = {}
 
+//declare screens
 let backdrop
+let menu
 
 let spawner
 
@@ -60,6 +62,7 @@ function setup() {
 
     bird = new Bird()
     backdrop = new Backdrop()
+    menu = new Menu()
 
     init()
 
@@ -158,75 +161,6 @@ function live() {
     bird.jump()
 }
 
-//menu object
-let menu = {
-    pos: {
-        x: 0,
-        y: 0
-    },
-    size: 0,
-    lastScore: 0,
-    bestScore: 0,
-    drawNumber: function(num) {
-        if (!(num > 100 || num < 0)) {
-            leftNum = Math.floor(num / 10)
-            rightNum = num - leftNum * 10
-
-            push()
-            translate(this.size / 4, 0)
-            texture(sprites.numbers[rightNum])
-            plane(this.size / 2, this.size)
-
-            translate(-this.size / 2, 0)
-            texture(sprites.numbers[leftNum])
-            plane(this.size / 2, this.size)
-            pop()
-        }
-    },
-    draw: function() {
-        texture(sprites.menu.play)
-
-        if (this.hover()) {
-            plane(this.size * 1.2, this.size * 1.2)
-        } else {
-            //Draw play button
-            plane(this.size, this.size)
-
-            //Draw best score
-            push()
-            texture(sprites.menu.best)
-            if (landscape) {
-                translate(-this.size, 0)
-            } else {
-                translate(0, -this.size)
-            }
-            plane(this.size, this.size)
-            menu.drawNumber(13)
-            pop()
-
-            //Draw last score
-            push()
-            if (landscape) {
-                translate(this.size, 0)
-            } else {
-                translate(0, this.size)
-            }
-            texture(sprites.menu.last)
-            plane(this.size, this.size)
-            menu.drawNumber(score)
-            pop()
-        }
-    },
-    hover: function() {
-        if (mouseX < width / 2 + this.size / 2 && mouseX > width / 2 - this.size / 2 &&
-            mouseY < height / 2 + this.size / 2 && mouseY > height / 2 - this.size / 2) {
-            return true
-        } else return false
-    },
-    init: function() {
-        menu.size = ((height + width) / 2) / 3
-    }
-}
 
 //controls
 function keyPressed() {
