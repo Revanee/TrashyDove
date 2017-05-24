@@ -4,7 +4,7 @@ class Cloud {
     	this.sprite.background(255)
     	this.speed = - width / 2000 - width / 200 * Math.random()
     	this.pos = {
-    		x: width + width * Math.random(),
+    		x: width * 1.5 + width * Math.random(),
     		y: Math.random() * height
     	}
     	this.size = Math.random() * 100 + 30
