@@ -5,9 +5,10 @@ let state = "Menu"
 
 let bird
 let tubes = []
-let clouds = []
 let sprites = {}
 let sounds = {}
+
+let backdrop
 
 let spawner
 
@@ -57,12 +58,8 @@ function setup() {
     override()
     createCanvas(document.body.offsetWidth, document.body.offsetHeight, WEBGL)
 
-    bird = new Bird(sprites)
-
-    clouds.push(new Cloud())
-    setInterval(function() {
-        clouds.push(new Cloud())
-    }, 1000)
+    bird = new Bird()
+    backdrop = new Backdrop()
 
     init()
 
@@ -83,19 +80,12 @@ function draw() {
     if (tubes.length > 3) {
         tubes.splice(0, 1)
     }
-    if (clouds.length > 100) {
-        clouds.splice(0, 1)
-    }
 
     //draw elements
 
     background('#22e4f9')
 
-    //Use a better way to optimize
-    texture(clouds[0].sprite)
-    clouds.forEach(function(cloud) {
-        cloud.draw()
-    })
+    backdrop.draw()
 
     bird.draw()
 
@@ -124,9 +114,7 @@ function update() {
     let targetTime = 1000 / 60
     let deltaT = elapsedTime / targetTime
 
-    clouds.forEach(function(cloud) {
-        cloud.update(deltaT)
-    })
+    backdrop.update(deltaT)
 
     if (state === "Playing") {
         bird.update(deltaT)
