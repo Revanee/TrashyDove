@@ -37,7 +37,7 @@ class Menu {
             //Draw best score
             push()
             texture(sprites.menu.best)
-            if (landscape) {
+            if (isLandscape()) {
                 translate(-this.getSize(), 0)
             } else {
                 translate(0, -this.getSize())
@@ -48,7 +48,7 @@ class Menu {
 
             //Draw last score
             push()
-            if (landscape) {
+            if (isLandscape()) {
                 translate(this.getSize(), 0)
             } else {
                 translate(0, this.getSize())

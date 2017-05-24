@@ -23,8 +23,6 @@ class Game {
             g.tubes.push(new Tube(g))
         }, 2000)
 
-        init()
-
         this.bird.jump()
     }
     update(deltaT) {

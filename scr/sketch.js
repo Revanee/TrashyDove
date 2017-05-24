@@ -9,8 +9,6 @@ let sounds = {}
 //declare screens stack
 let screens = []
 
-let landscape
-
 //load spritesk
 function preload() {
 
@@ -58,8 +56,6 @@ function setup() {
 
     screens[1].pause()
 
-    init()
-
     oldTime = window.performance.now()
 }
 
@@ -102,13 +98,12 @@ function mousePressed() {
 //allow resizing
 function windowResized() {
     resizeCanvas(document.body.offsetWidth, document.body.offsetHeight)
-    init()
 }
 
 //adjust sizes based on proportions
-function init() {
-    if (width > height) landscape = true
-    else landscape = false
+function isLandscape() {
+    if (width > height) return true
+    else return false
 }
 
 //Override library functions
