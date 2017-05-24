@@ -1,18 +1,15 @@
+//declare time step variables
 let oldTime
 let elapsedTime
 
-let state = "Menu"
-
-let bird
-let tubes = []
+//declare assets
 let sprites = {}
 let sounds = {}
 
 //declare screens
 let backdrop
 let menu
-
-let spawner
+let game
 
 let score = 0
 
@@ -60,9 +57,9 @@ function setup() {
     override()
     createCanvas(document.body.offsetWidth, document.body.offsetHeight, WEBGL)
 
-    bird = new Bird()
     backdrop = new Backdrop()
     menu = new Menu()
+    game = new Game()
 
     init()
 
@@ -78,36 +75,15 @@ function draw() {
     //update game logic
     update()
 
-    //splice arrays
-    //TODO: use a better way for culling
-    if (tubes.length > 3) {
-        tubes.splice(0, 1)
-    }
-
     //draw elements
 
     background('#22e4f9')
 
     backdrop.draw()
 
-    bird.draw()
+    game.draw()
 
-    texture(sprites.tube.top)
-    tubes.forEach(function(tube) {
-        tube.drawTop()
-    })
-
-    texture(sprites.tube.body)
-    tubes.forEach(function(tube) {
-        tube.drawBody()
-    })
-
-    texture(sprites.tube.bottom)
-    tubes.forEach(function(tube) {
-        tube.drawBottom()
-    })
-
-    if (state === "Menu") {
+    if (game.state === "Menu") {
         menu.draw()
     }
 }
@@ -119,58 +95,21 @@ function update() {
 
     backdrop.update(deltaT)
 
-    if (state === "Playing") {
-        bird.update(deltaT)
-
-        tubes.forEach(function(tube) {
-            tube.update(deltaT)
-
-            //score
-            if (tube.pos.x + tube.size < bird.pos.x && !tube.passed) {
-                tube.passed = true
-                score++
-                console.log(score)
-            }
-        })
-
-        //check for death
-        if (bird.collides(tubes)) {
-            //handle death
-            state = "Menu"
-            bird.die()
-            clearInterval(spawner)
-            console.log("Score: " + score)
-        }
+    if (game.state === "Playing") {
+        game.update(deltaT)
     }
 }
 
-//called on spawn
-function live() {
-    score = 0
-    tubes = []
-    state = "Playing"
-    bird = new Bird(sprites)
-
-    tubes.push(new Tube())
-    spawner = setInterval(function() {
-        tubes.push(new Tube())
-    }, 2000)
-
-    init()
-
-    bird.jump()
-}
-
-
 //controls
+//TODO: make modular
 function keyPressed() {
-    if (state === "Playing") bird.jump()
+    if (game.state === "Playing") game.bird.jump()
 }
 
 function mousePressed() {
-    if (state === "Playing") bird.jump()
-    if (state === "Menu") {
-        if (menu.hover()) live()
+    if (game.state === "Playing") game.bird.jump()
+    if (game.state === "Menu") {
+        if (menu.hover()) game.live()
     }
 }
 
