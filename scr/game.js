@@ -26,10 +26,12 @@ class Game {
         this.bird.jump()
     }
     update(deltaT) {
-        //TODO: use a better way for culling
-        if (this.tubes.length > 3) {
-            this.tubes.splice(0, 1)
-        }
+        
+        //cull
+        this.tubes = this.tubes.reduce(function (temp, tube) {
+            if(tube.pos.x + tube.size > -width / 2) temp.push(tube)
+            return temp
+        }, [])
 
         if (this.state === "Playing") {
             this.bird.update(deltaT)
