@@ -82,9 +82,9 @@ class Bird {
         }
 
         tubes.forEach(function(tube) {
-            if(tube.collides(hitbox)) {
+            if (tube.collides(hitbox)) {
                 collided = true
-                sounds.tube.hit[Math.floor(Math.random()*sounds.tube.hit.length)].play()
+                sounds.tube.hit[Math.floor(Math.random() * sounds.tube.hit.length)].play()
             }
         })
 

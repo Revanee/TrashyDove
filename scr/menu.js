@@ -5,13 +5,9 @@ class Menu {
             x: 0,
             y: 0
         }
-        this.getSize = function () {
+        this.getSize = function() {
             return ((height + width) / 2) / 3
         }
-        this.lastScore = 0
-        this.bestScore = 0
-
-        if (score > bestScore) bestScore = score
     }
     drawNumber(num) {
         if (!(num > 100 || num < 0)) {
@@ -47,7 +43,7 @@ class Menu {
                 translate(0, -this.getSize())
             }
             plane(this.getSize(), this.getSize())
-            this.drawNumber(bestScore)
+            this.drawNumber(this.parent.score.best)
             pop()
 
             //Draw last score
@@ -59,7 +55,7 @@ class Menu {
             }
             texture(sprites.menu.last)
             plane(this.getSize(), this.getSize())
-            this.drawNumber(score)
+            this.drawNumber(this.parent.score.last)
             pop()
         }
     }

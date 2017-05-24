@@ -9,9 +9,6 @@ let sounds = {}
 //declare screens stack
 let screens = []
 
-let score = 0
-let bestScore = 0
-
 let landscape
 
 //load spritesk

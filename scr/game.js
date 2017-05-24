@@ -4,11 +4,15 @@ class Game {
         this.tubes = []
         this.bird = new Bird()
         this.spawner
+        this.score = {
+            best: 0,
+            last: 0
+        }
     }
     live() {
         screens.pop()
 
-        score = 0
+        this.score.last = 0
         this.tubes = []
         this.state = "Playing"
         this.bird = new Bird(sprites)
@@ -39,8 +43,7 @@ class Game {
                 //score
                 if (tube.pos.x + tube.size < g.bird.pos.x && !tube.passed) {
                     tube.passed = true
-                    score++
-                    console.log(score)
+                    g.score.last++
                 }
             })
 
@@ -49,8 +52,9 @@ class Game {
                 //handle death
                 this.state = "Menu"
                 this.bird.die()
+                    //increase best score
+                this.score.best = Math.max(this.score.best, this.score.last)
                 clearInterval(this.spawner)
-                console.log("Score: " + score)
                 screens.push(new Menu(this))
             }
         }
