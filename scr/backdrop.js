@@ -29,4 +29,7 @@ class Backdrop {
     addCloud() {
 		this.clouds.push(new Cloud())
     }
+    mousePressed(){
+
+    }
 }

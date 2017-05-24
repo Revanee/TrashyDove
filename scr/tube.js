@@ -1,10 +1,10 @@
 class Tube {
-    constructor() {
+    constructor(parent) {
+        this.parent = parent
         this.passed = false
         this.speed = width / 100
         //Need to decide wether to keep same hole size or randomize
-        //IMPORTANT!! DON"T USE game.bird.size!
-        this.hole = /*Math.random() * (height / 8) +*/ game.bird.size
+        this.hole = /*Math.random() * (height / 8) +*/ parent.bird.size
         this.size = ((height + width) / 2) / 5
         this.hitbox = {
             offset: 1,

@@ -1,10 +1,13 @@
 class Menu {
-    constructor() {
+    constructor(parent) {
+        this.parent = parent
         this.pos = {
             x: 0,
             y: 0
         }
-        this.size = 0
+        this.getSize = function () {
+            return ((height + width) / 2) / 3
+        }
         this.lastScore = 0
         this.bestScore = 0
     }
@@ -14,13 +17,13 @@ class Menu {
             let rightNum = num - leftNum * 10
 
             push()
-            translate(this.size / 4, 0)
+            translate(this.getSize() / 4, 0)
             texture(sprites.numbers[rightNum])
-            plane(this.size / 2, this.size)
+            plane(this.getSize() / 2, this.getSize())
 
-            translate(-this.size / 2, 0)
+            translate(-this.getSize() / 2, 0)
             texture(sprites.numbers[leftNum])
-            plane(this.size / 2, this.size)
+            plane(this.getSize() / 2, this.getSize())
             pop()
         }
     }
@@ -28,43 +31,49 @@ class Menu {
         texture(sprites.menu.play)
 
         if (this.hover()) {
-            plane(this.size * 1.2, this.size * 1.2)
+            plane(this.getSize() * 1.2, this.getSize() * 1.2)
         } else {
             //Draw play button
-            plane(this.size, this.size)
+            plane(this.getSize(), this.getSize())
 
             //Draw best score
             push()
             texture(sprites.menu.best)
             if (landscape) {
-                translate(-this.size, 0)
+                translate(-this.getSize(), 0)
             } else {
-                translate(0, -this.size)
+                translate(0, -this.getSize())
             }
-            plane(this.size, this.size)
-            menu.drawNumber(13)
+            plane(this.getSize(), this.getSize())
+            this.drawNumber(13)
             pop()
 
             //Draw last score
             push()
             if (landscape) {
-                translate(this.size, 0)
+                translate(this.getSize(), 0)
             } else {
-                translate(0, this.size)
+                translate(0, this.getSize())
             }
             texture(sprites.menu.last)
-            plane(this.size, this.size)
-            menu.drawNumber(score)
+            plane(this.getSize(), this.getSize())
+            this.drawNumber(score)
             pop()
         }
     }
     hover() {
-        if (mouseX < width / 2 + this.size / 2 && mouseX > width / 2 - this.size / 2 &&
-            mouseY < height / 2 + this.size / 2 && mouseY > height / 2 - this.size / 2) {
+        if (mouseX < width / 2 + this.getSize() / 2 && mouseX > width / 2 - this.getSize() / 2 &&
+            mouseY < height / 2 + this.getSize() / 2 && mouseY > height / 2 - this.getSize() / 2) {
             return true
         } else return false
     }
-    init() {
-        menu.size = ((height + width) / 2) / 3
+    update(deltaT) {
+
+    }
+    mousePressed() {
+        if (this.hover()) this.parent.live()
+    }
+    keyPressed() {
+        
     }
 }

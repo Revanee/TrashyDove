@@ -6,10 +6,8 @@ let elapsedTime
 let sprites = {}
 let sounds = {}
 
-//declare screens
-let backdrop
-let menu
-let game
+//declare screens stack
+let screens = []
 
 let score = 0
 
@@ -57,9 +55,10 @@ function setup() {
     override()
     createCanvas(document.body.offsetWidth, document.body.offsetHeight, WEBGL)
 
-    backdrop = new Backdrop()
-    menu = new Menu()
-    game = new Game()
+    screens.push(new Backdrop())
+    screens.push(new Game())
+
+    screens[1].pause()
 
     init()
 
@@ -76,16 +75,11 @@ function draw() {
     update()
 
     //draw elements
-
     background('#22e4f9')
 
-    backdrop.draw()
-
-    game.draw()
-
-    if (game.state === "Menu") {
-        menu.draw()
-    }
+    screens.forEach(function(screen) {
+        screen.draw()
+    })
 }
 
 //update game logic once every frame
@@ -93,24 +87,18 @@ function update() {
     let targetTime = 1000 / 60
     let deltaT = elapsedTime / targetTime
 
-    backdrop.update(deltaT)
-
-    if (game.state === "Playing") {
-        game.update(deltaT)
-    }
+    screens.forEach(function(screen) {
+        screen.update(deltaT)
+    })
 }
 
 //controls
-//TODO: make modular
 function keyPressed() {
-    if (game.state === "Playing") game.bird.jump()
+    screens[screens.length - 1].keyPressed()
 }
 
 function mousePressed() {
-    if (game.state === "Playing") game.bird.jump()
-    if (game.state === "Menu") {
-        if (menu.hover()) game.live()
-    }
+    screens[screens.length - 1].mousePressed()
 }
 
 //allow resizing
@@ -121,7 +109,6 @@ function windowResized() {
 
 //adjust sizes based on proportions
 function init() {
-    menu.init()
     if (width > height) landscape = true
     else landscape = false
 }
