@@ -10,6 +10,8 @@ class Menu {
         }
         this.lastScore = 0
         this.bestScore = 0
+
+        if (score > bestScore) bestScore = score
     }
     drawNumber(num) {
         if (!(num > 100 || num < 0)) {
@@ -45,7 +47,7 @@ class Menu {
                 translate(0, -this.getSize())
             }
             plane(this.getSize(), this.getSize())
-            this.drawNumber(13)
+            this.drawNumber(bestScore)
             pop()
 
             //Draw last score
@@ -74,6 +76,6 @@ class Menu {
         if (this.hover()) this.parent.live()
     }
     keyPressed() {
-        
+        this.parent.live()
     }
 }

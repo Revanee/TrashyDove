@@ -10,10 +10,11 @@ let sounds = {}
 let screens = []
 
 let score = 0
+let bestScore = 0
 
 let landscape
 
-//load sprites
+//load spritesk
 function preload() {
 
     sprites.bird = loadGif('assets/sprites/bird/TrashyDove.gif')
