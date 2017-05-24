@@ -11,10 +11,9 @@ class Backdrop {
     update(deltaT) {
 	    
 	    //cull
-        this.clouds = this.clouds.reduce(function (temp, cloud) {
-            if(cloud.pos.x + cloud.size > -width / 2) temp.push(cloud)
-            return temp
-        }, [])
+        this.clouds = this.clouds.filter(function(cloud) {
+            return cloud.pos.x + cloud.size > -width / 2
+        })
 
 	    this.clouds.forEach(function(cloud) {
 	        cloud.update(deltaT)
