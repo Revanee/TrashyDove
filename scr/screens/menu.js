@@ -78,11 +78,13 @@ class Menu extends Screen {
             return true
         } else return false
     }
-    mousePressed() {
+    mouseReleased() {
         if (this.hover()) {
             screens.pop()
             screens.pop()
             screens.push(new Game())
+            mouseX = 0
+            mouseY = 0
         }
     }
     keyPressed() {

@@ -105,10 +105,20 @@ function keyPressed() {
         screens[screens.length - 1].keyPressed()
     } catch (e) {}
 }
+function keyReleased() {
+    try {
+        screens[screens.length - 1].keyReleased()
+    } catch (e) {}
+}
 
 function mousePressed() {
     try {
         screens[screens.length - 1].mousePressed()
+    } catch (e) {}
+}
+function mouseReleased() {
+    try {
+        screens[screens.length - 1].mouseReleased()
     } catch (e) {}
 }
 
