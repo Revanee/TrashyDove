@@ -1,6 +1,8 @@
 class Backdrop extends Screen {
     constructor() {
     	super()
+    	this.sprite = createGraphics(1, 1)
+    	this.sprite.background(255)
 		this.clouds = []
 	    this.addCloud()
 	    let bd = this
@@ -23,7 +25,7 @@ class Backdrop extends Screen {
     }
     draw() {
 	    //Use a better way to optimize
-	    texture(this.clouds[0].sprite)
+	    texture(this.sprite)
 	    this.clouds.forEach(function(cloud) {
 	        cloud.draw()
 	    })

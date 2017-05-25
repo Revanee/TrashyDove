@@ -1,7 +1,5 @@
 class Cloud {
     constructor() {
-    	this.sprite = createGraphics(1, 1)
-    	this.sprite.background(255)
     	this.speed = - width / 2000 - width / 200 * Math.random()
     	this.pos = {
     		x: width * 1.5 + width * Math.random(),
