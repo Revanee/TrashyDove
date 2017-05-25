@@ -9,6 +9,12 @@ let sounds = {}
 //declare screens stack
 let screens = []
 
+//keep track of score
+score = {
+    best: 0,
+    last: 0
+}
+
 //load spritesk
 function preload() {
 

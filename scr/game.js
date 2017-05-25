@@ -3,10 +3,8 @@ class Game {
         this.state = "Playing"
         this.tubes = []
         this.bird = new Bird()
-        this.score = {
-            best: 0,
-            last: 0
-        }
+
+        score.last = 0
 
         this.tubes.push(new Tube(this))
         let g = this
@@ -32,7 +30,7 @@ class Game {
                 //score
                 if (tube.pos.x + tube.size < g.bird.pos.x && !tube.passed) {
                     tube.passed = true
-                    g.score.last++
+                    score.last++
                 }
             })
 
@@ -42,7 +40,7 @@ class Game {
                 this.state = "Menu"
                 this.bird.die()
                     //increase best score
-                this.score.best = Math.max(this.score.best, this.score.last)
+                score.best = Math.max(score.best, score.last)
                 clearInterval(this.spawner)
                 screens.push(new Menu(this))
             }

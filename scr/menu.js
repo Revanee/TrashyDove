@@ -53,7 +53,7 @@ class Menu {
             translate(0, -this.getSize())
         }
         plane(sizeX, sizeY)
-        this.drawNumber(this.parent.score.best, sizeX / 2, sizeY)
+        this.drawNumber(score.best, sizeX / 2, sizeY)
         pop()
 
     }
@@ -67,7 +67,7 @@ class Menu {
             translate(0, this.getSize())
         }
         plane(sizeX, sizeY)
-        this.drawNumber(this.parent.score.last, sizeX / 2, sizeY)
+        this.drawNumber(score.last, sizeX / 2, sizeY)
         pop()
 
     }
