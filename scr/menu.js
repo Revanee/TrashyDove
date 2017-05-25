@@ -1,5 +1,6 @@
-class Menu {
+class Menu extends Screen {
     constructor(parent) {
+        super()
         this.parent = parent
         this.pos = {
             x: 0,
@@ -7,22 +8,6 @@ class Menu {
         }
         this.getSize = function() {
             return ((height + width) / 2) / 3
-        }
-    }
-    drawNumber(num) {
-        if (!(num > 100 || num < 0)) {
-            let leftNum = Math.floor(num / 10)
-            let rightNum = num - leftNum * 10
-
-            push()
-            translate(this.getSize() / 4, 0)
-            texture(sprites.numbers[rightNum])
-            plane(this.getSize() / 2, this.getSize())
-
-            translate(-this.getSize() / 2, 0)
-            texture(sprites.numbers[leftNum])
-            plane(this.getSize() / 2, this.getSize())
-            pop()
         }
     }
     draw() {
@@ -92,9 +77,6 @@ class Menu {
             mouseY < height / 2 + this.getSize() / 2 && mouseY > height / 2 - this.getSize() / 2) {
             return true
         } else return false
-    }
-    update(deltaT) {
-
     }
     mousePressed() {
         if (this.hover()) {

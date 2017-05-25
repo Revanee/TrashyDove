@@ -1,6 +1,6 @@
-class Game {
+class Game extends Screen {
     constructor() {
-        this.state = "Playing"
+        super()
         this.tubes = []
         this.bird = new Bird()
 
@@ -13,37 +13,40 @@ class Game {
         }, 2000)
         this.bird.jump()
     }
-    update(deltaT) {
+    updateLogic(deltaT) {
 
         //cull
+        //TODO: Put in updateGraphics()
         this.tubes = this.tubes.filter(function(tube) {
             return tube.pos.x + tube.size > -width / 2
         })
 
-        if (this.state === "Playing") {
-            this.bird.update(deltaT)
+        this.bird.update(deltaT)
 
-            let g = this
-            this.tubes.forEach(function(tube) {
-                tube.update(deltaT)
+        let g = this
+        this.tubes.forEach(function(tube) {
+            tube.update(deltaT)
 
-                //score
-                if (tube.pos.x + tube.size < g.bird.pos.x && !tube.passed) {
-                    tube.passed = true
-                    score.last++
-                }
-            })
-
-            //check for death
-            if (this.bird.collides(this.tubes)) {
-                //handle death
-                this.state = "Menu"
-                this.bird.die()
-                    //increase best score
-                score.best = Math.max(score.best, score.last)
-                clearInterval(this.spawner)
-                screens.push(new Menu(this))
+            //score
+            if (tube.pos.x + tube.size < g.bird.pos.x && !tube.passed) {
+                tube.passed = true
+                score.last++
             }
+        })
+
+        //check for death
+        if (this.bird.collides(this.tubes)) {
+            //handle death
+            this.bird.die()
+
+            //increase best score
+            score.best = Math.max(score.best, score.last)
+
+            //save
+            localStorage.score = JSON.stringify(score)
+
+            clearInterval(this.spawner)
+            screens.push(new Menu(this))
         }
 
     }
@@ -66,9 +69,9 @@ class Game {
         })
     }
     mousePressed() {
-        if (this.state === "Playing") this.bird.jump()
+        this.bird.jump()
     }
     keyPressed() {
-        if (this.state === "Playing") this.bird.jump()
+        this.bird.jump()
     }
 }

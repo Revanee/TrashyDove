@@ -1,5 +1,6 @@
-class Backdrop {
+class Backdrop extends Screen {
     constructor() {
+    	super()
 		this.clouds = []
 	    this.addCloud()
 	    let bd = this
@@ -8,7 +9,7 @@ class Backdrop {
 	    }, 1000)
 
     }
-    update(deltaT) {
+    updateGraphics(deltaT) {
 	    
 	    //cull
         this.clouds = this.clouds.filter(function(cloud) {
@@ -30,8 +31,5 @@ class Backdrop {
     }
     addCloud() {
 		this.clouds.push(new Cloud())
-    }
-    mousePressed(){
-
     }
 }

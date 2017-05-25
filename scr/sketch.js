@@ -10,9 +10,15 @@ let sounds = {}
 let screens = []
 
 //keep track of score
-score = {
-    best: 0,
-    last: 0
+let score
+if (localStorage.score) {
+    score = JSON.parse(localStorage.score)
+} else {
+    score = {
+        best: 0,
+        last: 0
+    }
+    localStorage.score = JSON.stringify(score)
 }
 
 //load spritesk
@@ -59,6 +65,7 @@ function setup() {
 
     screens.push(new Backdrop())
     screens.push(new Game())
+    screens.push(new Menu())
 
     oldTime = window.performance.now()
 }
@@ -86,8 +93,10 @@ function update() {
     let deltaT = elapsedTime / targetTime
 
     screens.forEach(function(screen) {
-        screen.update(deltaT)
+        screen.updateGraphics(deltaT)
     })
+
+    screens[screens.length - 1].updateLogic(deltaT)
 }
 
 //controls
