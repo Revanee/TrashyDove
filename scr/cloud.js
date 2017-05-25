@@ -9,10 +9,9 @@ class Cloud {
     }
 
     draw() {
-    	push()
     	translate(this.pos.x - width / 2, this.pos.y - height / 2)
     	plane(this.size, this.size)
-    	pop()
+        translate(-(this.pos.x - width / 2), -(this.pos.y - height / 2))
     }
 
     update(deltaT) {

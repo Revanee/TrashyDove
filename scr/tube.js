@@ -65,32 +65,28 @@ class Tube {
     }
 
     drawTop() {
-        push()
         translate(this.pos.x, this.pos.y - this.hole - this.size)
         plane(this.size, this.size)
-        pop()
+        translate(-this.pos.x, -(this.pos.y - this.hole - this.size))
     }
 
     drawBody() {
         for (let i = 1; i < 10; i++) {
-            push()
             translate(this.pos.x, this.pos.y - this.hole - this.size - this.size * i)
             plane(this.size, this.size)
-            pop()
+            translate(-this.pos.x, -(this.pos.y - this.hole - this.size - this.size * i))
         }
         for (let i = 1; i < 10; i++) {
-            push()
             translate(this.pos.x, this.pos.y + this.hole + this.size * i)
             plane(this.size, this.size)
-            pop()
+            translate(-this.pos.x, -(this.pos.y + this.hole + this.size * i))
         }
     }
 
     drawBottom() {
-        push()
         translate(this.pos.x, this.pos.y + this.hole)
         plane(this.size, this.size)
-        pop()
+        translate(-this.pos.x, -(this.pos.y + this.hole))
     }
 
     update(deltaT) {

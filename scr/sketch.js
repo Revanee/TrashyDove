@@ -1,3 +1,5 @@
+p5.disableFriendlyErrors = true;
+
 //declare time step variables
 let oldTime
 let elapsedTime
