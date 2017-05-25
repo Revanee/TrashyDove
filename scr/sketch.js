@@ -82,8 +82,8 @@ function draw() {
     //draw elements
 
     //use background to debug fps
-    //background('#22e4f9')
-    background(255 - frameRate() / 60 * 255, 0, frameRate() / 60 * 255)
+    background('#22e4f9')
+    //background(255 - frameRate() / 60 * 255, 0, frameRate() / 60 * 255)
 
     screens.forEach(function(screen) {
         screen.draw()
