@@ -4,8 +4,8 @@ class Tube {
         this.passed = false
         this.speed = width / 100
         //Need to decide wether to keep same hole size or randomize
-        this.hole = /*Math.random() * (height / 8) +*/ parent.bird.size
-        this.size = ((height + width) / 2) / 5
+        this.hole = parent.bird.size * 1.2
+        this.size = ((height + width) / 2) / 4
         this.hitbox = {
             offset: 1,
             pos: {
