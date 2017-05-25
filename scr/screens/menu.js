@@ -83,9 +83,9 @@ class Menu extends Screen {
             screens.pop()
             screens.pop()
             screens.push(new Game())
-            mouseX = 0
-            mouseY = 0
         }
+        mouseX = 0
+        mouseY = 0
     }
     keyPressed() {
         screens.pop()
