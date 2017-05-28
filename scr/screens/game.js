@@ -2,6 +2,7 @@ class Game extends Screen {
     constructor() {
         super()
         this.tubes = []
+        this.tubesSpawned = 0
         this.bird = new Bird()
 
         score.last = 0

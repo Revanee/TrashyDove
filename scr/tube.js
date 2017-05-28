@@ -1,11 +1,12 @@
 class Tube {
     constructor(parent) {
         this.parent = parent
+        this.parent.tubesSpawned++
         this.passed = false
         this.speed = width / 100
         //Need to decide wether to keep same hole size or randomize
         this.hole = parent.bird.size * 1.2
-        this.size = ((height + width) / 2) / 4
+        this.size = parent.bird.size * 2 //((height + width) / 2) / 4
         this.hitbox = {
             offset: 1,
             pos: {
@@ -21,7 +22,7 @@ class Tube {
             }
         }
         this.pos = {
-            y: Math.random() * (height - this.hole * 2) - (height / 2 - this.hole * 2),
+            y: noise(this.parent.tubesSpawned) * (height - this.hole * 2) - (height / 2 - this.hole * 2),
             x: width / 2 + this.size
         }
     }
