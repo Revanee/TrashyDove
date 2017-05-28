@@ -1,7 +1,9 @@
 # TrashyDove
 A Flappy Bird clone in JavaScript
 
-How to run: 
+Play in browser: https://revanee.github.io/TrashyDove/
+
+Run using electron:
 
 1) Install NodeJS Stable 
 2) Run in cmd "npm install electron -g"
