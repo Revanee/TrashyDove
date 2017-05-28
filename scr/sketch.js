@@ -85,7 +85,7 @@ function draw() {
 
     //use background to debug fps
     background('#22e4f9')
-    //background(255 - frameRate() / 60 * 255, 0, frameRate() / 60 * 255)
+        //background(255 - frameRate() / 60 * 255, 0, frameRate() / 60 * 255)
 
     screens.forEach(function(screen) {
         screen.draw()
@@ -110,17 +110,36 @@ function keyPressed() {
         screens[screens.length - 1].keyPressed()
     } catch (e) {}
 }
+
 function keyReleased() {
     try {
         screens[screens.length - 1].keyReleased()
     } catch (e) {}
 }
 
+
+//Avoid double event firing on touch devices
+//skip next mousePressed() whenever touchStart() is called
+let skipNextMouseClick = false
+
 function mousePressed() {
+    if (skipNextMouseClick) {
+        console.log('mousePressed')
+        try {
+            screens[screens.length - 1].mousePressed()
+        } catch (e) {}
+    }
+    skipNextMouseClick = true
+}
+
+function touchStarted() {
+    skipNextMouseClick = false
+    console.log('touch')
     try {
         screens[screens.length - 1].mousePressed()
     } catch (e) {}
 }
+
 function mouseReleased() {
     try {
         screens[screens.length - 1].mouseReleased()
