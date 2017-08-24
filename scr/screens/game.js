@@ -1,3 +1,4 @@
+let test = 0
 class Game extends Screen {
     constructor() {
         super()
@@ -68,6 +69,11 @@ class Game extends Screen {
         this.tubes.forEach(function(tube) {
             tube.drawBottom()
         })
+
+        //TODO: add live score
+        // translate(width / 3, -height / 3)
+        // drawNumber(score.last, (width + height) / 20, (width + height) / 10)
+        // translate(-width / 3, height / 3)
     }
     mousePressed() {
         this.bird.jump()

@@ -38,7 +38,7 @@ class Menu extends Screen {
             translate(0, -this.getSize())
         }
         plane(sizeX, sizeY)
-        this.drawNumber(score.best, sizeX / 2, sizeY)
+        drawNumber(score.best, sizeX / 2, sizeY)
         pop()
 
     }
@@ -52,25 +52,9 @@ class Menu extends Screen {
             translate(0, this.getSize())
         }
         plane(sizeX, sizeY)
-        this.drawNumber(score.last, sizeX / 2, sizeY)
+        drawNumber(score.last, sizeX / 2, sizeY)
         pop()
 
-    }
-    drawNumber(num, sizeX, sizeY) {
-        if (!(num > 100 || num < 0)) {
-            let leftNum = Math.floor(num / 10)
-            let rightNum = num - leftNum * 10
-
-            push()
-            translate(sizeX / 2, 0)
-            texture(sprites.numbers[rightNum])
-            plane(sizeX, sizeY)
-
-            translate(-sizeX, 0)
-            texture(sprites.numbers[leftNum])
-            plane(sizeX, sizeY)
-            pop()
-        }
     }
     hover() {
         if (mouseX < width / 2 + this.getSize() / 2 && mouseX > width / 2 - this.getSize() / 2 &&
