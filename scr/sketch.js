@@ -68,6 +68,7 @@ function setup() {
     screens.push(new Backdrop())
     screens.push(new Game())
     screens.push(new Menu())
+    // screens.push(new Test())
 
     oldTime = window.performance.now()
 }
@@ -98,19 +99,28 @@ function update() {
         screen.updateGraphics(deltaT)
     })
 
-    screens[screens.length - 1].updateLogic(deltaT)
+    for (let i = screens.length - 1; i >= 0; i--) {
+        screens[i].updateLogic(deltaT)
+        if(!screens[i].clickthrough) break
+    }
 }
 
 //controls
 function keyPressed() {
     try {
-        screens[screens.length - 1].keyPressed()
+        for (let i = screens.length - 1; i >= 0; i--) {
+            screens[i].keyPressed()
+            if(!screens[i].clickthrough) break
+        }
     } catch (e) {}
 }
 
 function keyReleased() {
     try {
-        screens[screens.length - 1].keyReleased()
+        for (let i = screens.length - 1; i >= 0; i--) {
+            screens[i].keyReleased()
+            if(!screens[i].clickthrough) break
+        }
     } catch (e) {}
 }
 
@@ -121,9 +131,11 @@ let skipNextMouseClick = false
 
 function mousePressed() {
     if (skipNextMouseClick) {
-        console.log('mousePressed')
         try {
-            screens[screens.length - 1].mousePressed()
+            for (let i = screens.length - 1; i >= 0; i--) {
+                screens[i].mousePressed()
+                if(!screens[i].clickthrough) break
+            }
         } catch (e) {}
     }
     skipNextMouseClick = true
@@ -133,13 +145,19 @@ function touchStarted() {
     skipNextMouseClick = false
     console.log('touch')
     try {
-        screens[screens.length - 1].mousePressed()
+        for (let i = screens.length - 1; i >= 0; i--) {
+            screens[i].mousePressed()
+            if(!screens[i].clickthrough) break
+        }
     } catch (e) {}
 }
 
 function mouseReleased() {
     try {
-        screens[screens.length - 1].mouseReleased()
+        for (let i = screens.length - 1; i >= 0; i--) {
+            screens[i].mouseReleased()
+            if(!screens[i].clickthrough) break
+        }
     } catch (e) {}
 }
 

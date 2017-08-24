@@ -1,4 +1,4 @@
-function drawNumber(num, sizeX, sizeY) {
+function drawNumber(num, size) {
     // if (!(num >= 100 || num < 0)) {
     //     let leftNum = Math.floor(num / 10)
     //     let rightNum = num - leftNum * 10
@@ -27,14 +27,14 @@ function drawNumber(num, sizeX, sizeY) {
 
     if (digits.length === 1) {
         texture(sprites.numbers[digits[0]])
-        plane((sizeX / 2) * 2, sizeY)
+        plane((size / 2), size)
     } else {
         push()
-        translate(-sizeX + sizeX / digits.length, 0)
+        translate((-size + size / digits.length) / 2, 0)
         for (let i = 0; i < digits.length; i++) {
             texture(sprites.numbers[digits[i]])
-            plane((sizeX / digits.length) * 2, sizeY * 2 / digits.length)
-            translate((sizeX / digits.length) * 2 , 0)
+            plane(size / digits.length, size * 2 / digits.length)
+            translate(size / digits.length , 0)
         }
         pop()
     }

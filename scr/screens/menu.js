@@ -38,7 +38,7 @@ class Menu extends Screen {
             translate(0, -this.getSize())
         }
         plane(sizeX, sizeY)
-        drawNumber(score.best, sizeX / 2, sizeY)
+        drawNumber(score.best, sizeY)
         pop()
 
     }
@@ -52,7 +52,7 @@ class Menu extends Screen {
             translate(0, this.getSize())
         }
         plane(sizeX, sizeY)
-        drawNumber(score.last, sizeX / 2, sizeY)
+        drawNumber(score.last, sizeY)
         pop()
 
     }

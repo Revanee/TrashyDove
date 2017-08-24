@@ -1,9 +1,6 @@
 class Screen {
 	constructor() {
-	    this.speak = function() {
-	    	console.log('test')
-	    }
-
+        this.clickthrough = false
 	}
     draw() {
 

@@ -1,4 +1,3 @@
-let test = 0
 class Game extends Screen {
     constructor() {
         super()
