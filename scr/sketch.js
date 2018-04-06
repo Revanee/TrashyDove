@@ -26,7 +26,12 @@ if (localStorage.score) {
 //load spritesk
 function preload() {
 
-    sprites.bird = loadGif('assets/sprites/bird/TrashyDove.gif')
+    sprites.bird = [
+        loadImage('assets/sprites/bird/bird-0.png'),
+        loadImage('assets/sprites/bird/bird-1.png'),
+        loadImage('assets/sprites/bird/bird-2.png'),
+        loadImage('assets/sprites/bird/bird-3.png')
+    ]
     sprites.tube = {
         top: loadImage('assets/sprites/tube/TubeTop.png'),
         bottom: loadImage('assets/sprites/tube/TubeBottom.png'),

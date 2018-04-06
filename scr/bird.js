@@ -21,21 +21,13 @@ class Bird {
         }
         this.gravity = ((height + width) / 2) / 700
         this.jumpPower = this.gravity * 12
-        this.sprite = sprites.bird
-        this.sprite.pause()
+        this.sprite = new Sprite(sprites.bird)
+        this.sprite.stop()
     }
 
     update(deltaT) {
         this.vel.y += this.gravity * deltaT
         this.pos.y += this.vel.y * deltaT
-
-        //Make sure animation plays only once
-        if (this.sprite.playing() && this.sprite.frames().length - 1 == this.sprite.frame()) {
-            this.sprite.pause()
-            try {
-                this.sprite.frame(0)
-            } catch (e) {}
-        }
     }
 
     draw() {
@@ -45,7 +37,7 @@ class Bird {
         translate(this.pos.x, this.pos.y)
         rotateZ((-this.vel.y / this.jumpPower) / 2)
         specularMaterial(0, 0, 0, 0)
-        texture(this.sprite)
+        texture(this.sprite.getImage())
         plane(this.size, this.size.y)
 
         pop()
@@ -69,10 +61,7 @@ class Bird {
         this.vel.y = -this.jumpPower
 
         //Start animation
-        try {
-            this.sprite.frame(0)
-            this.sprite.play()
-        } catch (e) {}
+        this.sprite.playOnce()
 
         //Play a random flap sound
         sounds.bird.flap[Math.floor(Math.random() * sounds.bird.flap.length)].play()
@@ -97,7 +86,6 @@ class Bird {
     }
 
     die() {
-        this.sprite.pause()
-        this.sprite.frame(0)
+        this.sprite.stop()
     }
 }
